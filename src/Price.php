@@ -126,26 +126,47 @@ class Price {
 	}
 
 	public function add(Price $value) {
-		if ($value->getCurrency() !== $this->getCurrency()) {
+		$us   = clone $this;
+		$them = clone $value;
+
+		if ($them->getCurrency() !== $us->getCurrency()) {
 			throw new Exception('Cannot add prices with different currencies.');
 		}
+		if ($them->getTaxRate() !== $us->getTaxRate()) {
+			throw new Exception('Cannot add prices with different tax rates.');
+		}
+
+		if ($them->getType() !== $us->getType()) {
+			$method = 'get' . ucfirst($us->getType());
+			$them = $them->$method();
+		}
 		return new Price(
-			$this->getAmount() + $value->getAmount($this->getType()),
-			$this->getCurrency(),
-			$this->getType(),
-			$this->getTaxRate()
+			$us->getAmount() + $them->getAmount(),
+			$us->getCurrency(),
+			$us->getType(),
+			$us->getTaxRate()
 		);
 	}
 
 	public function subtract(Price $value) {
-		if ($value->getCurrency() !== $this->getCurrency()) {
-			throw new Exception('Cannot subtract prices with different currencies.');
+		$us   = clone $this;
+		$them = clone $value;
+
+		if ($them->getCurrency() !== $us->getCurrency()) {
+			throw new Exception('Cannot add prices with different currencies.');
+		}
+		if ($them->getTaxRate() !== $us->getTaxRate()) {
+			throw new Exception('Cannot add prices with different tax rates.');
+		}
+		if ($them->getType() !== $us->getType()) {
+			$method = 'get' . ucfirst($us->getType());
+			$them = $them->$method();
 		}
 		return new Price(
-			$this->getAmount() - $value->getAmount($this->getType()),
-			$this->getCurrency(),
-			$this->getType(),
-			$this->getTaxZone()
+			$us->getAmount() - $them->getAmount(),
+			$us->getCurrency(),
+			$us->getType(),
+			$us->getTaxRate()
 		);
 	}
 

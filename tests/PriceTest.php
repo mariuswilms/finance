@@ -110,6 +110,21 @@ class PriceTest extends \PHPUnit_Framework_TestCase {
 		$expected = 3.800;
 		$this->assertEquals($expected, $result, '', 0.0001);
 	}
+
+	public function testAddingWithMixedTaxes() {
+		$subject = new Price(2000, 'EUR', 'net', 19); // gross 2380
+
+		$result = $subject->add(new Price(2000, 'EUR', 'net', 7)); // 2140
+		$expected = 4000;
+		$this->assertEquals($expected, $result->getNet()->getAmount());
+
+		$expected = 2380 + 2140;
+		$this->assertEquals($expected, $result->getGross()->getAmount());
+
+		$tax = $result->getTax()->getAmount();
+		$expected = 380 + 140;
+		$this->assertEquals($expected, $tax);
+	}
 }
 
 ?>
