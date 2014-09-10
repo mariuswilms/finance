@@ -133,7 +133,7 @@ class Price {
 			$this->getAmount() + $value->getAmount($this->getType()),
 			$this->getCurrency(),
 			$this->getType(),
-			$this->getTaxZone()
+			$this->getTaxRate()
 		);
 	}
 
