@@ -84,7 +84,7 @@ class Price {
 			return $this;
 		}
 		if (!$this->_taxRate) {
-			throw new Exception('Cannot calculate net price without tax rate.');
+			throw new Exception('Cannot calculate net from gross price without tax rate.');
 		}
 		return new Price(
 			($this->_amount / (100 + $this->_taxRate) * 100),
@@ -99,7 +99,7 @@ class Price {
 			return $this;
 		}
 		if (!$this->_taxRate) {
-			throw new Exception('Cannot calculate gross price without tax zone.');
+			throw new Exception('Cannot calculate gross from net price without tax rate.');
 		}
 		return new Price(
 			($this->_amount / 100 * (100 + $this->_taxRate)),
@@ -129,7 +129,7 @@ class Price {
 		$us   = clone $this;
 		$them = clone $value;
 
-		if ($them->getCurrency() !== $us->getCurrency()) {
+		if ($them->getCurrency() != $us->getCurrency()) {
 			throw new Exception('Cannot add prices with different currencies.');
 		}
 		if ($them->getTaxRate() !== $us->getTaxRate()) {
@@ -152,11 +152,11 @@ class Price {
 		$us   = clone $this;
 		$them = clone $value;
 
-		if ($them->getCurrency() !== $us->getCurrency()) {
-			throw new Exception('Cannot add prices with different currencies.');
+		if ($them->getCurrency() != $us->getCurrency()) {
+			throw new Exception('Cannot subtract prices with different currencies.');
 		}
 		if ($them->getTaxRate() !== $us->getTaxRate()) {
-			throw new Exception('Cannot add prices with different tax rates.');
+			throw new Exception('Cannot subtract prices with different tax rates.');
 		}
 		if ($them->getType() !== $us->getType()) {
 			$method = 'get' . ucfirst($us->getType());
