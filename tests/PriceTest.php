@@ -13,7 +13,6 @@
 namespace Finance;
 
 use Finance\Price;
-use Finance\TaxZone;
 
 class PriceTest extends \PHPUnit_Framework_TestCase {
 
@@ -30,21 +29,21 @@ class PriceTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSimpleNetToGross() {
-		$subject = new Price(20, 'EUR', 'net', new TaxZone(19));
+		$subject = new Price(20, 'EUR', 'net', 19);
 		$expected = 23.8000;
 		$result = $subject->getGross()->getAmount();
 		$this->assertEquals($expected, $result, '', 0.0001);
 	}
 
 	public function testSimpleGrossToNet() {
-		$subject = new Price(20, 'EUR', 'gross', new TaxZone(19));
+		$subject = new Price(20, 'EUR', 'gross', 19);
 		$expected = 16.8067;
 		$result = $subject->getNet()->getAmount();
 		$this->assertEquals($expected, $result, '', 0.0001);
 	}
 
 	public function testLimitedNetGrossConversionPrecisionLost() {
-		$subject = new Price(20, 'EUR', 'net', new TaxZone(19));
+		$subject = new Price(20, 'EUR', 'net', 19);
 
 		$expected = 20;
 
@@ -57,47 +56,47 @@ class PriceTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSimpleAdd() {
-		$subject = new Price(20, 'EUR', 'net', new TaxZone(19));
+		$subject = new Price(20, 'EUR', 'net', 19);
 
 		$expected = 40;
-		$result = $subject->add(new Price(20, 'EUR', 'net', new TaxZone(19)));
+		$result = $subject->add(new Price(20, 'EUR', 'net', 19));
 
 		$this->assertEquals($expected, $result->getNet()->getAmount(), '', 0.0001);
 	}
 
 	public function testSimpleSubtract() {
-		$subject = new Price(40, 'EUR', 'net', new TaxZone(19));
+		$subject = new Price(40, 'EUR', 'net', 19);
 
 		$expected = 20;
-		$result = $subject->subtract(new Price(20, 'EUR', 'net', new TaxZone(19)));
+		$result = $subject->subtract(new Price(20, 'EUR', 'net', 19));
 
 		$this->assertEquals($expected, $result->getNet()->getAmount(), '', 0.0001);
 	}
 
 	public function testAddingNetOnlyNoInternalTypeConversion() {
-		$subject = new Price(20, 'EUR', 'net', new TaxZone(19));
+		$subject = new Price(20, 'EUR', 'net', 19);
 
 		$expected = 60;
 
-		$result = $subject->add(new Price(20, 'EUR', 'net', new TaxZone(19)));
-		$result = $result->add(new Price(20, 'EUR', 'net', new TaxZone(19)));
+		$result = $subject->add(new Price(20, 'EUR', 'net', 19));
+		$result = $result->add(new Price(20, 'EUR', 'net', 19));
 
 		$this->assertEquals($expected, $result->getNet()->getAmount(), '', 0.0001);
 	}
 
 	public function testAddingMixedTypeConversion() {
-		$subject = new Price(20, 'EUR', 'gross', new TaxZone(19));
+		$subject = new Price(20, 'EUR', 'gross', 19);
 
 		$expected = 60;
 
-		$result = $subject->add(new Price(16.8067, 'EUR', 'net', new TaxZone(19)));
-		$result = $result->add(new Price(20, 'EUR', 'gross', new TaxZone(19)));
+		$result = $subject->add(new Price(16.8067, 'EUR', 'net', 19));
+		$result = $result->add(new Price(20, 'EUR', 'gross', 19));
 
 		$this->assertEquals($expected, $result->getGross()->getAmount(), '', 0.0001);
 	}
 
 	public function testTax() {
-		$subject = new Price(20, 'EUR', 'net', new TaxZone(19));
+		$subject = new Price(20, 'EUR', 'net', 19);
 
 		$net = $subject->getNet()->getAmount();
 		$gross = $subject->getGross()->getAmount();
