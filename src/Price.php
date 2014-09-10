@@ -79,6 +79,15 @@ class Price {
 		return $this->_taxRate;
 	}
 
+	public function removeTaxRate() {
+		return new Price(
+			$this->_amount,
+			$this->_currency,
+			$this->_type,
+			null
+		);
+	}
+
 	public function getNet() {
 		if ($this->_type === 'net') {
 			return $this;
