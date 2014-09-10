@@ -38,10 +38,10 @@ class Price {
 	public function __construct($value, $currency, $type, $taxRate = null) {
 		$this->_amount = $value;
 
-		if (!is_string($currency)) {
-			throw new InvalidArgumentException('Price currency must be of type string.');
+		if (!is_string($currency) && !is_object($currency)) {
+			throw new InvalidArgumentException('Price currency must be of type string or object.');
 		}
-		$this->_currency = $currency;
+		$this->_currency = is_object($currency) ? $currency : new Currency($currency);
 
 		if ($type !== 'net' && $type !== 'gross') {
 			throw new InvalidArgumentException('Price type must be either `net` or `gross`.');
@@ -55,7 +55,7 @@ class Price {
 	}
 
 	public function getMoney() {
-		return new Money((integer) $this->_amount, new Currency($this->_currency));
+		return new Money((integer) $this->_amount, $this->_currency);
 	}
 
 	public function getAmount($type = null) {
