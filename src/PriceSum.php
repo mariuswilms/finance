@@ -12,33 +12,24 @@
 
 namespace Finance;
 
-use SebastianBergmann\Money\Money;
-use SebastianBergmann\Money\Currency;
+use Finance\Price;
 use Exception;
 use InvalidArgumentException;
 
 class PriceSum {
 
-	public function add(Price $value) {
-		$this->_add[] = $value;
+	protected $_add = [];
 
-		return $this;
-	}
-
-	public function subtract(Price $value) {
-		$this->_subtract[] = $value;
-
-		return $this;
-	}
+	protected $_subtract = [];
 
 	public function getNet() {
 		$result = null;
 
 		foreach ($this->_add as $item) {
 			if ($result) {
-				$result = $result->add($item->getNet());
+				$result = $result->add($item->getNet()->removeTaxRate());
 			} else {
-				$result = $item->getNet();
+				$result = $item->getNet()->removeTaxRate();
 			}
 		}
 		return $result;
@@ -49,9 +40,9 @@ class PriceSum {
 
 		foreach ($this->_add as $item) {
 			if ($result) {
-				$result = $result->add($item->getGross());
+				$result = $result->add($item->getGross()->removeTaxRate());
 			} else {
-				$result = $item->getGross();
+				$result = $item->getGross()->removeTaxRate();
 			}
 		}
 		return $result;
@@ -65,6 +56,32 @@ class PriceSum {
 			return null;
 		}
 		return $gross->subtract($net);
+	}
+
+	public function add(Price $value) {
+		$this->_add[] = $value;
+
+		return $this;
+	}
+
+	public function subtract(Price $value) {
+		$this->_subtract[] = $value;
+
+		return $this;
+	}
+
+	public function isZero() {
+		foreach ($this->_add as $item) {
+			if (!$item->isZero()) {
+				return false;
+			}
+		}
+		foreach ($this->_subtract as $item) {
+			if (!$item->isZero()) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
 

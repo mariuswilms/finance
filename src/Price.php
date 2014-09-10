@@ -182,6 +182,10 @@ class Price {
 	public function greaterThan(Price $value) {
 		return $this->getAmount($value->getType()) > $value->getAmount();
 	}
+
+	public function isZero() {
+		return $this->_amount === 0;
+	}
 }
 
 ?>
