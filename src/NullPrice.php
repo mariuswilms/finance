@@ -39,19 +39,19 @@ class NullPrice implements PriceInterface {
 	}
 
 	public function getNet() {
-		return new NullPrice();
+		return clone $this;
 	}
 
 	public function getGross() {
-		return new NullPrice();
+		return clone $this;
 	}
 
 	public function getTax() {
-		return new NullPrice();
+		return clone $this;
 	}
 
 	public function multiply($factor) {
-		return new NullPrice();
+		return clone $this;
 	}
 
 	public function add(PriceInterface $value) {
@@ -68,6 +68,10 @@ class NullPrice implements PriceInterface {
 
 	public function isZero() {
 		return true;
+	}
+
+	public function negate() {
+		return clone $this;
 	}
 }
 

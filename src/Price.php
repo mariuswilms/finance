@@ -187,6 +187,24 @@ class Price implements PriceInterface {
 	public function isZero() {
 		return $this->_amount === 0;
 	}
+
+	public function negate() {
+		return new Price(
+			-1 * $this->_amount,
+			$this->_currency,
+			$this->_type,
+			$this->_taxRate
+		);
+	}
+
+	public function removeTaxRate() {
+		return new Price(
+			$this->_amount,
+			$this->_currency,
+			$this->_type,
+			null
+		);
+	}
 }
 
 ?>

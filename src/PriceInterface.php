@@ -39,6 +39,8 @@ interface PriceInterface {
 	public function greaterThan(PriceInterface $value);
 
 	public function isZero();
+
+	public function negate();
 }
 
 ?>
