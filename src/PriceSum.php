@@ -28,7 +28,7 @@ class PriceSum {
 		foreach ($this->_add as $item) {
 			$result = $result->add($item->getNet()->removeTaxRate());
 		}
-		return $result;
+		return $result->getNet();
 	}
 
 	public function getGross() {
@@ -37,7 +37,7 @@ class PriceSum {
 		foreach ($this->_add as $item) {
 			$result = $result->add($item->getGross()->removeTaxRate());
 		}
-		return $result;
+		return $result->getGross();
 	}
 
 	public function getTax() {
@@ -53,13 +53,13 @@ class PriceSum {
 	public function add(Price $value) {
 		$this->_add[] = $value;
 
-		return $this;
+		return clone $this;
 	}
 
 	public function subtract(Price $value) {
 		$this->_subtract[] = $value;
 
-		return $this;
+		return clone $this;
 	}
 
 	public function isZero() {
