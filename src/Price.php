@@ -16,6 +16,7 @@ use SebastianBergmann\Money\Money;
 use SebastianBergmann\Money\Currency;
 use Exception;
 use InvalidArgumentException;
+use Finance\PriceInterface;
 
 /**
  * A class which is loosely based upon the Money class. In contrast to money
@@ -25,7 +26,7 @@ use InvalidArgumentException;
  * Price can optionally work without a given tax rate but will throw an exception
  * if a conversion from the internal type is attempted.
  */
-class Price {
+class Price implements PriceInterface {
 
 	protected $_amount;
 
@@ -134,7 +135,7 @@ class Price {
 		);
 	}
 
-	public function add(Price $value) {
+	public function add(PriceInterface $value) {
 		$us   = clone $this;
 		$them = clone $value;
 
@@ -157,7 +158,7 @@ class Price {
 		);
 	}
 
-	public function subtract(Price $value) {
+	public function subtract(PriceInterface $value) {
 		$us   = clone $this;
 		$them = clone $value;
 
@@ -179,7 +180,7 @@ class Price {
 		);
 	}
 
-	public function greaterThan(Price $value) {
+	public function greaterThan(PriceInterface $value) {
 		return $this->getAmount($value->getType()) > $value->getAmount();
 	}
 
