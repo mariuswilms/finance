@@ -36,6 +36,22 @@ class PriceSumTest extends \PHPUnit_Framework_TestCase {
 		$subject = new PriceSum();
 
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 19)); // gross 2380
+		$subject = $subject->add(new Price(2300, 'EUR', 'gross', 19)); // net 2000
+
+		$expected = 4000;
+		$this->assertEquals($expected, $subject->getNet()->getAmount());
+
+		$expected = 2380 + 2380;
+		$this->assertEquals($expected, $subject->getGross()->getAmount());
+
+		$expected = 380 + 380;
+		$this->assertEquals($expected, $subject->getTax());
+	}
+
+	public function testAddingWithMixedTypesAndRates() {
+		$subject = new PriceSum();
+
+		$subject = $subject->add(new Price(2000, 'EUR', 'net', 19)); // gross 2380
 		$subject = $subject->add(new Price(2140, 'EUR', 'gross', 7)); // net 2000
 
 		$expected = 4000;
