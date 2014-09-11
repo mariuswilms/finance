@@ -23,37 +23,29 @@ class PriceSum {
 	protected $_subtract = [];
 
 	public function getNet() {
-		$result = null;
+		$result = new NullPrice();
 
 		foreach ($this->_add as $item) {
-			if ($result) {
-				$result = $result->add($item->getNet()->removeTaxRate());
-			} else {
-				$result = $item->getNet()->removeTaxRate();
-			}
+			$result = $result->add($item->getNet()->removeTaxRate());
 		}
 		return $result;
 	}
 
 	public function getGross() {
-		$result = null;
+		$result = new NullPrice();
 
 		foreach ($this->_add as $item) {
-			if ($result) {
-				$result = $result->add($item->getGross()->removeTaxRate());
-			} else {
-				$result = $item->getGross()->removeTaxRate();
-			}
+			$result = $result->add($item->getGross()->removeTaxRate());
 		}
 		return $result;
 	}
 
 	public function getTax() {
 		if (!$gross = $this->getGross()) {
-			return null;
+			return new NullPrice();
 		}
 		if (!$net = $this->getNet()) {
-			return null;
+			return new NullPrice();
 		}
 		return $gross->subtract($net);
 	}
