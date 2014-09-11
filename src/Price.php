@@ -16,6 +16,7 @@ use SebastianBergmann\Money\Money;
 use SebastianBergmann\Money\Currency;
 use Exception;
 use InvalidArgumentException;
+use Finance\NullPrice;
 use Finance\PriceInterface;
 
 /**
@@ -139,6 +140,10 @@ class Price implements PriceInterface {
 		$us   = clone $this;
 		$them = clone $value;
 
+		if ($them instanceof NullPrice) {
+			return $us;
+		}
+
 		if ($them->getCurrency() != $us->getCurrency()) {
 			throw new Exception('Cannot add prices with different currencies.');
 		}
@@ -162,12 +167,17 @@ class Price implements PriceInterface {
 		$us   = clone $this;
 		$them = clone $value;
 
+		if ($them instanceof NullPrice) {
+			return $us->negate();
+		}
+
 		if ($them->getCurrency() != $us->getCurrency()) {
 			throw new Exception('Cannot subtract prices with different currencies.');
 		}
 		if ($them->getTaxRate() !== $us->getTaxRate()) {
 			throw new Exception('Cannot subtract prices with different tax rates.');
 		}
+
 		if ($them->getType() !== $us->getType()) {
 			$method = 'get' . ucfirst($us->getType());
 			$them = $them->$method();
