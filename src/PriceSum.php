@@ -50,6 +50,16 @@ class PriceSum {
 		return $gross->subtract($net);
 	}
 
+	// Assumes all prices in sum have the same currency -
+	// as enforced by price classes.
+	public function getCurrency() {
+		if (!$this->_add && !$this->_subtract) {
+			throw new Exception("Cannot get currency from empty sum.");
+		}
+		$price = reset($this->_add ?: $this->_subtract);
+		return $price->getCurrency();
+	}
+
 	public function add(Price $value) {
 		$this->_add[] = $value;
 
