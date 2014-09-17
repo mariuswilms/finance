@@ -181,6 +181,13 @@ class Price implements PriceInterface {
 		);
 	}
 
+	public function equals(PriceInterface $value) {
+		if ($value->getCurrency() != $this->getCurrency()) {
+			throw new Exception('Cannot compare prices with different currencies.');
+		}
+		return $value->getNet()->getAmount() == $this->getNet()->getAmount();
+	}
+
 	public function greaterThan(PriceInterface $value) {
 		return $this->getAmount($value->getType()) > $value->getAmount();
 	}

@@ -72,6 +72,18 @@ class PriceSum {
 		return clone $this;
 	}
 
+	public function greaterThan(Price $value) {
+		$result = new NullPrice();
+
+		foreach ($this->_add as $item) {
+			$result = $result->add($item->getNet()->removeTaxRate());
+		}
+		foreach ($this->_subtract as $item) {
+			$result = $result->subtract($item->getNet()->removeTaxRate());
+		}
+		return $result->greaterThan($value);
+	}
+
 	public function isZero() {
 		foreach ($this->_add as $item) {
 			if (!$item->isZero()) {
