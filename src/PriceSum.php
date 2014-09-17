@@ -28,6 +28,9 @@ class PriceSum {
 		foreach ($this->_add as $item) {
 			$result = $result->add($item->getNet()->removeTaxRate());
 		}
+		foreach ($this->_subtract as $item) {
+			$result = $result->subtract($item->getNet()->removeTaxRate());
+		}
 		return $result->getNet();
 	}
 
@@ -36,6 +39,9 @@ class PriceSum {
 
 		foreach ($this->_add as $item) {
 			$result = $result->add($item->getGross()->removeTaxRate());
+		}
+		foreach ($this->_subtract as $item) {
+			$result = $result->subtract($item->getGross()->removeTaxRate());
 		}
 		return $result->getGross();
 	}
