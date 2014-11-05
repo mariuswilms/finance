@@ -12,6 +12,7 @@
 
 namespace Finance;
 
+use Finance\PriceInterface;
 use Finance\Price;
 use Exception;
 use InvalidArgumentException;
@@ -66,19 +67,19 @@ class PriceSum {
 		return $price->getCurrency();
 	}
 
-	public function add(Price $value) {
+	public function add(PriceInterface $value) {
 		$this->_add[] = $value;
 
 		return clone $this;
 	}
 
-	public function subtract(Price $value) {
+	public function subtract(PriceInterface $value) {
 		$this->_subtract[] = $value;
 
 		return clone $this;
 	}
 
-	public function greaterThan(Price $value) {
+	public function greaterThan(PriceInterface $value) {
 		$result = new NullPrice();
 
 		foreach ($this->_add as $item) {
