@@ -22,6 +22,30 @@ class MoneySum {
 
 	protected $_subtract = [];
 
+	public function getAmount() {
+		return $this->_sum();
+	}
+
+	protected function _sum() {
+		$result = null;
+
+		foreach ($this->_add as $item) {
+			if ($result) {
+				$result = $result->add($item);
+			} else {
+				$result = clone $item;
+			}
+		}
+		foreach ($this->_subtract as $item) {
+			if ($result) {
+				$result = $result->subtract($item);
+			} else {
+				$result = clone $item;
+			}
+		}
+		return $result;
+	}
+
 	// Assumes all money values in sum have the same currency -
 	// as enforced by money classes.
 	public function getCurrency() {
@@ -51,22 +75,8 @@ class MoneySum {
 	}
 
 	public function greaterThan(Money $value) {
-		$result = null;
+		$result = $this->_sum();
 
-		foreach ($this->_add as $item) {
-			if ($result) {
-				$result = $result->add($item);
-			} else {
-				$result = clone $item;
-			}
-		}
-		foreach ($this->_subtract as $item) {
-			if ($result) {
-				$result = $result->subtract($item);
-			} else {
-				$result = clone $item;
-			}
-		}
 		if (!$result) {
 			return $value->getAmount() > 0;
 		}
