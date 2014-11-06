@@ -68,12 +68,18 @@ class PriceSum {
 	}
 
 	public function add(PriceInterface $value) {
+		if ($value->isZero()) {
+			return $this;
+		}
 		$this->_add[] = $value;
 
 		return clone $this;
 	}
 
 	public function subtract(PriceInterface $value) {
+		if ($value->isZero()) {
+			return $this;
+		}
 		$this->_subtract[] = $value;
 
 		return clone $this;
