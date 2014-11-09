@@ -63,7 +63,9 @@ class PriceSum {
 		if (!$this->_add && !$this->_subtract) {
 			throw new Exception("Cannot get currency from empty sum.");
 		}
-		$price = reset($this->_add ?: $this->_subtract);
+
+		$reference = $this->_add ?: $this->_subtract;
+		$price = reset($reference);
 		return $price->getCurrency();
 	}
 
