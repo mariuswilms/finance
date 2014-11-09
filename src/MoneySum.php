@@ -23,7 +23,7 @@ class MoneySum {
 	protected $_subtract = [];
 
 	public function getAmount() {
-		return $this->_sum();
+		return $this->_sum()->getAmount();
 	}
 
 	protected function _sum() {
