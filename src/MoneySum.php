@@ -40,7 +40,7 @@ class MoneySum {
 			if ($result) {
 				$result = $result->subtract($item);
 			} else {
-				$result = clone $item;
+				$result = $item->negate();
 			}
 		}
 		return $result;
