@@ -16,6 +16,7 @@ use Finance\PriceInterface;
 use Finance\Price;
 use Exception;
 use InvalidArgumentException;
+use SebastianBergmann\Money\Money;
 
 class PriceSum {
 
@@ -47,6 +48,7 @@ class PriceSum {
 		return $result->getGross();
 	}
 
+	// Returns money object.
 	public function getTax() {
 		if (!$gross = $this->getGross()) {
 			return new NullPrice();
@@ -54,7 +56,7 @@ class PriceSum {
 		if (!$net = $this->getNet()) {
 			return new NullPrice();
 		}
-		return $gross->subtract($net);
+		return $gross->getMoney()->subtract($net->getMoney());
 	}
 
 	// Assumes all prices in sum have the same currency -
