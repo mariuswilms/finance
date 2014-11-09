@@ -59,7 +59,7 @@ class NullPrice implements PriceInterface {
 	}
 
 	public function subtract(PriceInterface $value) {
-		return clone $value;
+		return $value->negate();
 	}
 
 	public function greaterThan(PriceInterface $value) {
