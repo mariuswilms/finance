@@ -22,9 +22,15 @@ class MoneySum {
 
 	protected $_subtract = [];
 
-	public function getAmount() {
+	public function getMoney() {
 		if ($result = $this->_sum()) {
 			return $result;
+		}
+	}
+
+	public function getAmount() {
+		if ($result = $this->_sum()) {
+			return $result->getAmount();
 		}
 	}
 
