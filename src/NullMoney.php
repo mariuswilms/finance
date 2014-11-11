@@ -12,43 +12,14 @@
 
 namespace Finance;
 
-use Exception;
-use InvalidArgumentException;
-use Finance\NullMoney;
-use Finance\PriceInterface;
+class NullMoney {
 
-class NullPrice implements PriceInterface {
-
-	public function getMoney() {
-		return new NullMoney();
-	}
-
-	public function getAmount($type = null) {
+	public function getAmount() {
 		return 0;
 	}
 
 	public function getCurrency() {
 		return null;
-	}
-
-	public function getType() {
-		return null;
-	}
-
-	public function getTaxRate() {
-		return null;
-	}
-
-	public function getNet() {
-		return clone $this;
-	}
-
-	public function getGross() {
-		return clone $this;
-	}
-
-	public function getTax() {
-		return clone $this;
 	}
 
 	public function multiply($factor) {
