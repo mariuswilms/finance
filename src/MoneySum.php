@@ -58,7 +58,7 @@ class MoneySum {
 	// as enforced by money classes.
 	public function getCurrency() {
 		if (!$this->_add && !$this->_subtract) {
-			throw new Exception("Cannot get currency from empty sum.");
+			return null;
 		}
 
 		$reference = $this->_add ?: $this->_subtract;
@@ -66,7 +66,7 @@ class MoneySum {
 		return $price->getCurrency();
 	}
 
-	public function add(Money $value) {
+	public function add($value) {
 		if ($value->getAmount() === 0) {
 			return $this;
 		}
@@ -75,7 +75,7 @@ class MoneySum {
 		return clone $this;
 	}
 
-	public function subtract(Money $value) {
+	public function subtract($value) {
 		if ($value->getAmount() === 0) {
 			return $this;
 		}
@@ -84,7 +84,7 @@ class MoneySum {
 		return clone $this;
 	}
 
-	public function greaterThan(Money $value) {
+	public function greaterThan($value) {
 		$result = $this->_sum();
 
 		if (!$result) {
