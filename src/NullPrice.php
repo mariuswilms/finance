@@ -12,43 +12,38 @@
 
 namespace Finance;
 
-use Exception;
-use InvalidArgumentException;
-use Finance\NullMoney;
 use Finance\PriceInterface;
+use Finance\NullMoney;
+use Finance\Currency;
 
 class NullPrice implements PriceInterface {
 
-	public function getMoney() {
-		return new NullMoney();
-	}
-
-	public function getAmount($type = null) {
+	public function getAmount() {
 		return 0;
 	}
 
 	public function getCurrency() {
-		return null;
+		return new Currency('XXX');
 	}
 
 	public function getType() {
-		return null;
+		return 'net';
 	}
 
-	public function getTaxRate() {
-		return null;
+	public function getRate() {
+		return 0;
 	}
 
 	public function getNet() {
-		return clone $this;
+		return new NullMoney();
 	}
 
 	public function getGross() {
-		return clone $this;
+		return new NullMoney();
 	}
 
 	public function getTax() {
-		return clone $this;
+		return new NullMoney();
 	}
 
 	public function multiply($factor) {
@@ -63,16 +58,24 @@ class NullPrice implements PriceInterface {
 		return $value->negate();
 	}
 
+	public function negate() {
+		return clone $this;
+	}
+
 	public function greaterThan(PriceInterface $value) {
-		return false;
+		return $this->getAmount() > $value->getAmount();
+	}
+
+	public function lessThan(PriceInterface $value) {
+		return $this->getAmount() < $value->getAmount();
+	}
+
+	public function equals(PriceInterface $value) {
+		return $this->getAmount() === $value->getAmount();
 	}
 
 	public function isZero() {
 		return true;
-	}
-
-	public function negate() {
-		return clone $this;
 	}
 }
 

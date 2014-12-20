@@ -1,9 +1,9 @@
 {
     "name": "atelierdisko/finance",
     "description": "Utilities to deal with financial things.",
-    "keywords": ["tax", "price", "finance"],
+    "keywords": ["tax", "price", "finance", "currency"],
     "homepage": "https://github.com/atelierdisko/finance",
-    "license": "BSD-3-clause",
+    "license": "proprietary",
     "authors": [
         {
             "name": "Atelier Disko",
@@ -11,8 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0",
-        "sebastian/money": "1.*"
+        "php": ">=5.5.0"
     },
     "require-dev": {
         "phpunit/phpunit": ">=4.0.0"    

@@ -12,11 +12,11 @@
 
 namespace Finance;
 
-use SebastianBergmann\Money\Money;
-use SebastianBergmann\Money\Currency;
 use Exception;
 use InvalidArgumentException;
-use Finance\NullPrice;
+use OverflowException;
+use Finance\Money;
+use Finance\Currency;
 use Finance\PriceInterface;
 
 /**
@@ -35,10 +35,15 @@ class Price implements PriceInterface {
 
 	protected $_type;
 
-	protected $_taxRate;
+	protected $_rate;
 
-	public function __construct($value, $currency, $type, $taxRate = null) {
-		$this->_amount = $value;
+	protected $_roundingMode = null;
+
+	public function __construct($amount, $currency, $type, $rate, $roundingMode = PHP_ROUND_HALF_UP) {
+		if (!is_integer($amount)) {
+			throw new InvalidArgumentException('Price amount must be of type integer.');
+		}
+		$this->_amount = $amount;
 
 		if (!is_string($currency) && !is_object($currency)) {
 			throw new InvalidArgumentException('Price currency must be of type string or object.');
@@ -50,22 +55,18 @@ class Price implements PriceInterface {
 		}
 		$this->_type = $type;
 
-		if ($taxRate !== null && !is_integer($taxRate)) {
+		if (!is_integer($rate)) {
 			throw new InvalidArgumentException('Price tax rate must be of type integer.');
 		}
-		$this->_taxRate = $taxRate;
+		$this->_rate = $rate;
+
+		$this->_roundingMode = $roundingMode;
 	}
 
-	public function getMoney() {
-		return new Money((integer) $this->_amount, $this->_currency);
-	}
+	/* Access */
 
-	public function getAmount($type = null) {
-		if ($type === 'net') {
-			return $this->getNet()->getAmount();
-		} elseif ($type === 'gross') {
-			return $this->getGross()->getAmount();
-		}
+	// @return integer
+	public function getAmount() {
 		return $this->_amount;
 	}
 
@@ -77,144 +78,170 @@ class Price implements PriceInterface {
 		return $this->_type;
 	}
 
-	public function getTaxRate() {
-		return $this->_taxRate;
+	// @return integer
+	public function getRate() {
+		return $this->_rate;
 	}
 
+	// @return Money
 	public function getNet() {
 		if ($this->_type === 'net') {
-			return $this;
+			return new Money(
+				$this->_amount,
+				$this->_currency
+			);
 		}
-		if (!$this->_taxRate) {
-			throw new Exception('Cannot calculate net from gross price without tax rate.');
-		}
-		return new Price(
-			($this->_amount / (100 + $this->_taxRate) * 100),
-			$this->_currency,
-			'net',
-			$this->_taxRate
+		return new Money(
+			$this->_castToInteger($this->_amount / (100 + $this->_rate) * 100),
+			$this->_currency
 		);
 	}
 
+	// @return Money
 	public function getGross() {
 		if ($this->_type === 'gross') {
-			return $this;
+			return new Money(
+				$this->_amount,
+				$this->_currency
+			);
 		}
-		if (!$this->_taxRate) {
-			throw new Exception('Cannot calculate gross from net price without tax rate.');
-		}
-		return new Price(
-			($this->_amount / 100 * (100 + $this->_taxRate)),
-			$this->_currency,
-			'gross',
-			$this->_taxRate
+		return new Money(
+			$this->_castToInteger($this->_amount / 100 * (100 + $this->_rate)),
+			$this->_currency
 		);
 	}
 
+	// @return Money
 	public function getTax() {
-		$result = $this->getGross()->getMoney();
-		$result = $result->subtract($this->getNet()->getMoney());
+		$result = $this->getGross();
+		$result = $result->subtract($this->getNet());
 
 		return $result;
 	}
 
-	public function multiply($factor) {
-		return new Price(
-			$this->_amount * $factor,
-			$this->_currency,
-			$this->_type,
-			$this->_taxRate
-		);
-	}
+	/* Calculation */
 
-	public function add(PriceInterface $value) {
-		$us   = clone $this;
-		$them = clone $value;
-
-		if ($them instanceof NullPrice) {
-			return $us;
-		}
-
-		if ($them->getCurrency() != $us->getCurrency()) {
-			throw new Exception('Cannot add prices with different currencies.');
-		}
-		if ($them->getTaxRate() !== $us->getTaxRate()) {
-			throw new Exception('Cannot add prices with different tax rates.');
-		}
-
-		if ($them->getType() !== $us->getType()) {
-			$method = 'get' . ucfirst($us->getType());
-			$them = $them->$method();
-		}
-		return new Price(
-			$us->getAmount() + $them->getAmount(),
-			$us->getCurrency(),
-			$us->getType(),
-			$us->getTaxRate()
-		);
-	}
-
-	public function subtract(PriceInterface $value) {
-		$us   = clone $this;
-		$them = clone $value;
-
-		if ($them instanceof NullPrice) {
-			return $us->negate();
-		}
-
-		if ($them->getCurrency() != $us->getCurrency()) {
-			throw new Exception('Cannot subtract prices with different currencies.');
-		}
-		if ($them->getTaxRate() !== $us->getTaxRate()) {
-			throw new Exception('Cannot subtract prices with different tax rates.');
-		}
-
-		if ($them->getType() !== $us->getType()) {
-			$method = 'get' . ucfirst($us->getType());
-			$them = $them->$method();
-		}
-		return new Price(
-			$us->getAmount() - $them->getAmount(),
-			$us->getCurrency(),
-			$us->getType(),
-			$us->getTaxRate()
-		);
-	}
-
-	public function equals(PriceInterface $value) {
-		if ($value->getCurrency() != $this->getCurrency()) {
-			throw new Exception('Cannot compare prices with different currencies.');
-		}
-		return $value->getNet()->getAmount() == $this->getNet()->getAmount();
-	}
-
-	public function greaterThan(PriceInterface $value) {
-		if ($value->getCurrency() != $this->getCurrency()) {
-			throw new Exception('Cannot compare prices with different currencies.');
-		}
-		return $this->getAmount($value->getType()) > $value->getAmount();
-	}
-
-	public function isZero() {
-		return $this->_amount === 0;
-	}
-
+	// @return Price
 	public function negate() {
 		return new Price(
 			-1 * $this->_amount,
 			$this->_currency,
 			$this->_type,
-			$this->_taxRate
+			$this->_rate
 		);
 	}
 
-	public function removeTaxRate() {
+	// @return Price
+	public function multiply($factor) {
 		return new Price(
-			$this->_amount,
-			$this->_currency,
+			$this->_castToInteger($result->_amount * $factor),
+			$result->_currency,
 			$this->_type,
-			null
+			$this->_rate
 		);
+	}
+
+	// @return Price
+	public function add(PriceInterface $value) {
+		$us   = $this;
+		$them = $value;
+
+		if ($us->isZero()) {
+			return clone $them;
+		}
+		if ($them->isZero()) {
+			return clone $us;
+		}
+
+		$this->_assertSameCurrency($us, $them);
+		$this->_assertSameRate($us, $them);
+
+		$them = $this->_convertToCommonType($us, $them);
+
+		return new Price(
+			$us->getAmount() + $them->getAmount(),
+			$us->getCurrency(),
+			$us->getType(),
+			$us->getRate()
+		);
+	}
+
+	// @return Price
+	public function subtract(PriceInterface $value) {
+		$us   = clone $this;
+		$them = clone $value;
+
+		if ($us->isZero()) {
+			return $them->negate();
+		}
+		if ($them->isZero()) {
+			return clone $us;
+		}
+
+		$this->_assertSameCurrency($us, $them);
+		$this->_assertSameRate($us, $them);
+
+		$them = $this->_convertToCommonType($us, $them);
+
+		return new Price(
+			$us->getAmount() - $them->getAmount(),
+			$us->getCurrency(),
+			$us->getType(),
+			$us->getRate()
+		);
+	}
+
+	/* Comparison */
+
+	public function isZero() {
+		return $this->_amount === 0;
+	}
+
+	public function equals(PriceInterface $value) {
+		$this->_assertSameCurrency($this, $value);
+		return $this->getNet()->equals($value->getNet());
+	}
+
+	public function greaterThan(PriceInterface $value) {
+		$this->_assertSameCurrency($this, $value);
+		return $this->getNet()->greaterThan($value->getNet());
+	}
+
+	public function lessThan(PriceInterface $value) {
+		$this->_assertSameCurrency($this, $value);
+		return $this->getNet()->lessThan($value->getNet());
+	}
+
+	/* Helpers */
+
+	protected function _assertSameCurrency($a, $b) {
+		if ($a->getCurrency() != $b->getCurrency()) {
+			throw new Exception('Calculation/comparison with differing currencies.');
+		}
+	}
+
+	protected function _assertSameRate($a, $b) {
+		if ($a->getRate() !== $b->getRate()) {
+			throw new Exception('Calculation/comparison with differing rates.');
+		}
+	}
+
+	// @return Price
+	protected function _convertToCommonType($us, $them) {
+		if ($them->getType() !== $us->getType()) {
+			$method = 'get' . ucfirst($us->getType());
+			return $them->$method();
+		}
+		return $them;
+	}
+
+	protected function _castToInteger($amount) {
+		$amount = round($amount, $this->_roundingMode);
+
+		if (abs($amount) > PHP_INT_MAX) {
+			throw new OverflowException();
+		}
+		return intval($amount);
 	}
 }
 

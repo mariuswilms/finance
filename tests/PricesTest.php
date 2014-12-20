@@ -12,12 +12,12 @@
 
 namespace Finance;
 
-use Finance\PriceSum;
+use Finance\Prices;
 
-class PriceSumTest extends \PHPUnit_Framework_TestCase {
+class PricesTest extends \PHPUnit_Framework_TestCase {
 
 	public function testAddingWithMixedTaxRates() {
-		$subject = new PriceSum();
+		$subject = new Prices();
 
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 19)); // gross 2380
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 7)); // 2140
@@ -33,7 +33,7 @@ class PriceSumTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testAddingWithMixedTypes() {
-		$subject = new PriceSum();
+		$subject = new Prices();
 
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 19)); // gross 2380
 		$subject = $subject->add(new Price(2300, 'EUR', 'gross', 19)); // net 2000
@@ -49,7 +49,7 @@ class PriceSumTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testAddingWithMixedTypesAndRates() {
-		$subject = new PriceSum();
+		$subject = new Prices();
 
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 19)); // gross 2380
 		$subject = $subject->add(new Price(2140, 'EUR', 'gross', 7)); // net 2000

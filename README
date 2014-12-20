@@ -4,7 +4,38 @@ Finance
 
 Synopsis
 --------
-n/a
+Finance provides the classes for financial value objects [1].
+`Money` [2] and `Price`, which is a taxed version of `Money`.
+
+This project is inspired by the Sebastian Bergmann's "Money" project [3]
+as well as Rob Pike's ivy [4].
+
+For calculations `MoneySum` and `PriceSum` are provided.
+
+Empty values are represented by Null objects.
+
+[1] http://martinfowler.com/bliki/ValueObject.html
+[2] http://martinfowler.com/eaaCatalog/money.html
+[3] https://github.com/sebastianbergmann/money
+[4] https://github.com/robpike/ivy
+    https://www.youtube.com/watch?v=PXoG0WX0r_E
+[5] http://en.wikipedia.org/wiki/Null_Object_pattern
+
+Mode of Operation
+-----------------
+
+1. Value objects of different levels cannot be mixed.
+   > Just `Price`s can be added to `PriceSum`. A `Money` object
+     and `Price` object cann be subtracted from eachother.
+
+2. All financial value objects must fulfill a given minimum interface.
+   > This allows for output in a formatted unified way. And in general
+     simplifies things "down the way" to rendering.
+
+3. For highest preciscion amount is always integer.
+   > Except when calculating sums internally.
+
+??? 4. When in doubt `net` is the default price type, `0` zero
 
 Copyright & License
 -------------------

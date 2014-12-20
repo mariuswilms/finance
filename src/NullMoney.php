@@ -12,38 +12,55 @@
 
 namespace Finance;
 
-class NullMoney {
+use Finance\MoneyInterface;
+use Finance\Currency;
+
+class NullMoney implements MoneyInterface {
+
+	/* Access */
 
 	public function getAmount() {
 		return 0;
 	}
 
 	public function getCurrency() {
-		return null;
+		return new Currency('XXX');
 	}
+
+	/* Calculation */
 
 	public function multiply($factor) {
 		return clone $this;
 	}
 
-	public function add(PriceInterface $value) {
+	public function add(MoneyInterface $value) {
 		return clone $value;
 	}
 
-	public function subtract(PriceInterface $value) {
+	public function subtract(MoneyInterface $value) {
 		return $value->negate();
-	}
-
-	public function greaterThan(PriceInterface $value) {
-		return false;
-	}
-
-	public function isZero() {
-		return true;
 	}
 
 	public function negate() {
 		return clone $this;
+	}
+
+	/* Comparison */
+
+	public function greaterThan(MoneyInterface $value) {
+		return $this->getAmount() > $value->getAmount();
+	}
+
+	public function lessThan(MoneyInterface $value) {
+		return $this->getAmount() < $value->getAmount();
+	}
+
+	public function equals(MoneyInterface $value) {
+		return $this->getAmount() === $value->getAmount();
+	}
+
+	public function isZero() {
+		return true;
 	}
 }
 
