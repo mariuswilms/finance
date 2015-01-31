@@ -16,24 +16,24 @@ use Finance\Prices;
 
 class PricesTest extends \PHPUnit_Framework_TestCase {
 
-	public function testAddingWithMixedNetRatesFailsOverGetNet() {
+	public function testAddingWithMixedNetRatesOverGetNet() {
 		$subject = new Prices();
 
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 19)); // gross 2380
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 7)); // 2140
 
-		$this->setExpectedException('Exception');
-		$subject->getNet();
+		$expected = 2000 + 2000;
+		$this->assertEquals($expected, $subject->getNet()->getAmount());
 	}
 
-	public function testAddingWithMixedNetRatesFailsOverGetGross() {
+	public function testAddingWithMixedNetRatesOverGetGross() {
 		$subject = new Prices();
 
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 19)); // gross 2380
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 7)); // 2140
 
-		$this->setExpectedException('Exception');
-		$subject->getGross();
+		$expected = 2380 + 2140;
+		$this->assertEquals($expected, $subject->getGross()->getAmount());
 	}
 
 	public function testAddingWithMixedTypes() {

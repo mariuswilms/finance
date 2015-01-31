@@ -14,6 +14,7 @@ namespace Finance;
 
 use Finance\Price;
 use Finance\PriceInterface;
+use Finance\Money;
 use Finance\NullMoney;
 use Finance\NullPrice;
 
@@ -25,46 +26,44 @@ class Prices {
 
 	// @return integer
 	public function getAmount() {
-		return $this->_sum()->getAmount();
+		return $this->_singleSum('net')->getAmount();
 	}
 
 	// @return Money
-	public function getNet($split = false) {
-		if ($split) {
-			$result = $this->_sum('type');
-			return isset($result['net']) ? $result['net'] : new NullMoney();
-		}
-		return $this->_sum()->getNet();
+	public function getNet() {
+		return $this->_singleSum('net');
 	}
 
 	// @return Money
-	public function getGross($split = false) {
-		if ($split) {
-			$result = $this->_sum('type');
-			return isset($result['gross']) ? $result['gross'] : new NullMoney();
-		}
-		return $this->_sum()->getGross();
+	public function getGross() {
+		return $this->_singleSum('gross');
 	}
 
 	// @return Money
 	public function getTax() {
-		return $this->_sum()->getTax();
+		$gross = $this->_singleSum('gross');
+		$net = $this->_singleSum('net');
+
+		return new Money(
+			$gross->getAmount() - $net->getAmount(),
+			$net->getCurrency()
+		);
 	}
 
 	// @return Currency|array
 	public function getCurrency($split = false) {
 		if ($split) {
-			return $this->_sum('currency');
+			return $this->_splitSum('currency');
 		}
-		return $this->_sum()->getCurrency();
+		return $this->_singleSum('net')->getCurrency();
 	}
 
 	// @return string|array
 	public function getType($split = false) {
 		if ($split) {
-			return $this->_sum('type');
+			return $this->_splitSum('type');
 		}
-		return $this->_sum()->getType();
+		return 'net';
 	}
 
 	/* Calculation (lazy) */
@@ -101,35 +100,42 @@ class Prices {
 
 	/* Helpers */
 
-	// @return Price|array
-	protected function _sum($by = null) {
-		if ($by) {
-			$byMethod = 'get' . ucfirst($by);
-			$results = [];
-
-			foreach ($this->_calculations as $calculation) {
-				$method = key($calculation);
-				$value  = current($calculation);
-
-				if (is_object($key = $value->{$byMethod}())) {
-					$key = (string) $key;
-				}
-				if (!isset($results[$key])) {
-					$results[$key] = new NullPrice();
-				}
-				$results[$key] = $results[$key]->{$method}($value);
-			}
-			return $results;
-		}
-		$result = new NullPrice();
+	// When reducing to a single sum we return and calc with Money.
+	// @return Money
+	protected function _singleSum($by) {
+		$byMethod = 'get' . ucfirst($by);
+		$result = new NullMoney();
 
 		foreach ($this->_calculations as $calculation) {
 			$method = key($calculation);
 			$value  = current($calculation);
 
+			if (is_object($value)) {
+				$value = $value->{$byMethod}();
+			}
 			$result = $result->{$method}($value);
 		}
 		return $result;
+	}
+
+	// @return array
+	protected function _sums($by) {
+		$byMethod = 'get' . ucfirst($by);
+		$results = [];
+
+		foreach ($this->_calculations as $calculation) {
+			$method = key($calculation);
+			$value  = current($calculation);
+
+			if (is_object($key = $value->{$byMethod}())) {
+				$key = (string) $key;
+			}
+			if (!isset($results[$key])) {
+				$results[$key] = new NullPrice();
+			}
+			$results[$key] = $results[$key]->{$method}($value);
+		}
+		return $results;
 	}
 }
 
