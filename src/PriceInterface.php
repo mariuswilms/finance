@@ -34,12 +34,6 @@ interface PriceInterface {
 
 	public function subtract(PriceInterface $value);
 
-	public function equals(PriceInterface $value);
-
-	public function greaterThan(PriceInterface $value);
-
-	public function lessThan(PriceInterface $value);
-
 	public function isZero();
 
 	public function negate();

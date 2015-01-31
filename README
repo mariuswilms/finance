@@ -37,6 +37,14 @@ Mode of Operation
 
 ??? 4. When in doubt `net` is the default price type, `0` zero
 
+Ambiguties when comparing Prices
+--------------------------------
+
+Price and Prices classes don't have comparison methods. You must
+first retrieve the net from Price as a Money object then compare
+those. Otherwise it's not clear what you are comparing: net or
+gross amounts.
+
 Copyright & License
 -------------------
 This library is Copyright (c) 2014 Atelier Disko - All rights reserved.

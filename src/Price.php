@@ -192,27 +192,6 @@ class Price implements PriceInterface {
 		return $this->_amount === 0;
 	}
 
-	public function equals(PriceInterface $value, $by = 'net') {
-		$this->_assertSameCurrency($this, $value);
-		$byMethod = 'get' . ucfirst($by);
-
-		return $this->{$byMethod}()->equals($value->{$byMethod}());
-	}
-
-	public function greaterThan(PriceInterface $value, $by = 'net') {
-		$this->_assertSameCurrency($this, $value);
-		$byMethod = 'get' . ucfirst($by);
-
-		return $this->{$byMethod}()->greaterThan($value->{$byMethod}());
-	}
-
-	public function lessThan(PriceInterface $value, $by = 'net') {
-		$this->_assertSameCurrency($this, $value);
-		$byMethod = 'get' . ucfirst($by);
-
-		return $this->{$byMethod}()->lessThan($value->{$byMethod}());
-	}
-
 	/* Helpers */
 
 	protected function _assertSameCurrency($a, $b) {
