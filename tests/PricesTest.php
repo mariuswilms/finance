@@ -22,8 +22,13 @@ class PricesTest extends \PHPUnit_Framework_TestCase {
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 19)); // gross 2380
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 7)); // 2140
 
-		$expected = 2000 + 2000;
-		$this->assertEquals($expected, $subject->getNet()->getAmount());
+		$sum = $subject->sum();
+
+		$expected = 2000;
+		$this->assertEquals($expected, $sum['EUR'][19]->getNet()->getAmount());
+
+		$expected = 2000;
+		$this->assertEquals($expected, $sum['EUR'][7]->getNet()->getAmount());
 	}
 
 	public function testAddingWithMixedNetRatesOverGetGross() {
@@ -32,8 +37,13 @@ class PricesTest extends \PHPUnit_Framework_TestCase {
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 19)); // gross 2380
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 7)); // 2140
 
-		$expected = 2380 + 2140;
-		$this->assertEquals($expected, $subject->getGross()->getAmount());
+		$sum = $subject->sum();
+
+		$expected = 2380;
+		$this->assertEquals($expected, $sum['EUR'][19]->getGross()->getAmount());
+
+		$expected = 2140;
+		$this->assertEquals($expected, $sum['EUR'][7]->getGross()->getAmount());
 	}
 
 	public function testAddingWithMixedTypes() {
@@ -42,14 +52,28 @@ class PricesTest extends \PHPUnit_Framework_TestCase {
 		$subject = $subject->add($a = new Price(2000, 'EUR', 'net', 19)); // gross 2380
 		$subject = $subject->add($b = new Price(2380, 'EUR', 'gross', 19)); // net 2000
 
+		$sum = $subject->sum();
+
 		$expected = 2000 + 2000;
-		$this->assertEquals($expected, $subject->getNet()->getAmount());
+		$this->assertEquals($expected, $sum['EUR'][19]->getNet()->getAmount());
 
 		$expected = 2380 + 2380;
-		$this->assertEquals($expected, $subject->getGross()->getAmount());
+		$this->assertEquals($expected, $sum['EUR'][19]->getGross()->getAmount());
+	}
 
-		$expected = 380 + 380;
-		$this->assertEquals($expected, $subject->getTax()->getAmount());
+	public function testAddingRepeatedTypeConversion() {
+		$subject = new Prices();
+
+		$subject = $subject->add($a = new Price(2000, 'EUR', 'net', 19)); // gross 2380
+		$subject = $subject->add($b = new Price(2380, 'EUR', 'gross', 19)); // net 2000
+
+		$sum = $subject->sum();
+
+		$expected = 2000 + 2000;
+		$this->assertEquals($expected, $sum['EUR'][19]->getNet()->getAmount());
+
+		$expected = 2380 + 2380;
+		$this->assertEquals($expected, $sum['EUR'][19]->getGross()->getAmount());
 	}
 }
 

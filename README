@@ -7,12 +7,14 @@ Synopsis
 Finance provides the classes for financial value objects [1].
 `Money` [2] and `Price`, which is a taxed version of `Money`.
 
-This project is inspired by the Sebastian Bergmann's "Money" project [3]
-as well as Rob Pike's ivy [4].
+This project is built on Sebastian Bergmann's "Money" project [3]
+and inspired by Rob Pike's ivy [4].
 
-For calculations `MoneySum` and `PriceSum` are provided.
+For calculations of mixed currency and/or mixed tax rates `Monies` and `Prices`
+are provided.
 
-Empty values are represented by Null objects.
+Empty values are represented by Null objects. `NullMoney` and `NullPrice`. There
+is no `NullCurrency` instead `Currency('XXX')` is used.
 
 [1] http://martinfowler.com/bliki/ValueObject.html
 [2] http://martinfowler.com/eaaCatalog/money.html
@@ -26,24 +28,36 @@ Mode of Operation
 
 1. Value objects of different levels cannot be mixed.
    > Just `Price`s can be added to `PriceSum`. A `Money` object
-     and `Price` object cann be subtracted from eachother.
+     and `Price` object can't be added to eachother.
 
-2. All financial value objects must fulfill a given minimum interface.
+2. Single value objects (Money and Price) must fulfill a given minimal interface.
    > This allows for output in a formatted unified way. And in general
      simplifies things "down the way" to rendering.
 
-3. For highest preciscion amount is always integer.
-   > Except when calculating sums internally.
-
-??? 4. When in doubt `net` is the default price type, `0` zero
+3. For highest precision amount is always cast to integer.
 
 Ambiguties when comparing Prices
 --------------------------------
 
-Price and Prices classes don't have comparison methods. You must
+The Price class doesn't have comparison methods. You must
 first retrieve the net from Price as a Money object then compare
 those. Otherwise it's not clear what you are comparing: net or
 gross amounts.
+
+Compatibilities between Objects
+-------------------------------
+
+Money objects can be added to Money objects, as long as they have
+the same currencies.
+
+The Monies object allows for adding and subtracting Money objects with
+different currencies.
+
+Price objects can be added to Price objects, as long as they have
+the same currencies and rate.
+
+The Prices object allows for adding and subtracting Price objects with
+different currencies and rates.
 
 Copyright & License
 -------------------

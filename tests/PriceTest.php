@@ -68,10 +68,9 @@ class PriceTest extends \PHPUnit_Framework_TestCase {
 
 	public function testAddingMixedTypeConversion() {
 		$subject = new Price(2000, 'EUR', 'gross', 19);
-
 		$expected = 6000;
 
-		$result = $subject->add(new Price(1680, 'EUR', 'net', 19));
+		$result = $subject->add(new Price(1681, 'EUR', 'net', 19));
 		$result = $result->add(new Price(2000, 'EUR', 'gross', 19));
 
 		$this->assertEquals($expected, $result->getGross()->getAmount());

@@ -12,95 +12,54 @@
 
 namespace Finance;
 
-use Finance\Money;
 use Finance\MoneyInterface;
 use Finance\NullMoney;
 
-class Monies implements MoneyInterface {
+// Allows mixing Money objects with differnt currencies.
+class Monies {
 
-	protected $_calculations = [];
+	protected $_data = [];
 
 	/* Access */
 
-	// @return integer
-	public function getAmount() {
-		return $this->_singleSum()->getAmount();
+	// @return array An array with Currency as key and Money as value.
+	public function sum() {
+		return $this->_data;
 	}
 
-	// @return Currency|array
-	public function getCurrency($split = false) {
-		if ($split) {
-			return $this->_splitSum('currency');
-		}
-		return $this->_singleSum()->getCurrency();
-	}
-
-	/* Calculation (lazy) */
+	/* Calculation */
 
 	// @return Monies
 	public function add(MoneyInterface $value) {
-		$this->_calculations[] = [__FUNCTION__ => $value];
+		$currency = (string) $value->getCurrency();
+
+		if (!isset($this->_data[$currency])) {
+			$this->_data[$currency] = new NullMoney();
+		}
+		$this->_data[$currency] = $this->_data[$currency]->add($value);
 		return clone $this;
 	}
 
 	// @return Monies
 	public function subtract(MoneyInterface $value) {
-		$this->_calculations[] = [__FUNCTION__ => $value];
+		$currency = (string) $value->getCurrency();
+
+		if (!isset($this->_data[$currency])) {
+			$this->_data[$currency] = new NullMoney();
+		}
+		$this->_data[$currency] = $this->_data[$currency]->subtract($value);
 		return clone $this;
 	}
 
 	/* Comparison */
 
-	public function greaterThan(MoneyInterface $value) {
-		return $this->_singleSum()->greaterThan($value);
-	}
-
-	public function lessThan(MoneyInterface $value) {
-		return $this->_singleSum()->lessThan($value);
-	}
-
-	public function equals(MoneyInterface $value) {
-		return $this->_singleSum()->equals($value);
-	}
-
 	public function isZero() {
-		return $this->_singleSum()->isZero();
-	}
-
-	/* Helpers */
-
-	// When reducing to a single sum we return and calc with Money.
-	// @return Money
-	protected function _singleSum() {
-		$result = new NullMoney();
-
-		foreach ($this->_calculations as $calculation) {
-			$method = key($calculation);
-			$value  = current($calculation);
-
-			$result = $result->{$method}($value);
-		}
-		return $result;
-	}
-
-	// @return array An array of Money objects.
-	protected function _splitSum($by) {
-		$byMethod = 'get' . ucfirst($by);
-		$results = [];
-
-		foreach ($this->_calculations as $calculation) {
-			$method = key($calculation);
-			$value  = current($calculation);
-
-			if (is_object($key = $value->{$byMethod}())) {
-				$key = (string) $key;
+		foreach ($this->_data as $currency => $money) {
+			if (!$money->isZero()) {
+				return false;
 			}
-			if (!isset($results[$key])) {
-				$results[$key] = new NullMoney();
-			}
-			$results[$key] = $results[$key]->{$method}($value);
 		}
-		return $results;
+		return true;
 	}
 }
 

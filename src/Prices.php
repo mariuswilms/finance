@@ -18,112 +18,54 @@ use Finance\Money;
 use Finance\NullMoney;
 use Finance\NullPrice;
 
+// Allows mixing prices with different currencies and rates.
 class Prices {
 
-	protected $_calculations = [];
+	protected $_data = [];
 
 	/* Access */
 
-	// @return integer
-	public function getAmount() {
-		return $this->_singleSum('net')->getAmount();
+	public function sum() {
+		return $this->_data;
 	}
 
-	// @return Money
-	public function getNet() {
-		return $this->_singleSum('net');
-	}
-
-	// @return Money
-	public function getGross() {
-		return $this->_singleSum('gross');
-	}
-
-	// @return Money
-	public function getTax() {
-		$gross = $this->_singleSum('gross');
-		$net = $this->_singleSum('net');
-
-		return new Money(
-			$gross->getAmount() - $net->getAmount(),
-			$net->getCurrency()
-		);
-	}
-
-	// @return Currency|array
-	public function getCurrency($split = false) {
-		if ($split) {
-			return $this->_splitSum('currency');
-		}
-		return $this->_singleSum('net')->getCurrency();
-	}
-
-	// @return string|array
-	public function getType($split = false) {
-		if ($split) {
-			return $this->_splitSum('type');
-		}
-		return 'net';
-	}
-
-	/* Calculation (lazy) */
+	/* Calculation */
 
 	// @return Prices
 	public function add(PriceInterface $value) {
-		$this->_calculations[] = [__FUNCTION__ => $value];
+		$currency = (string) $value->getCurrency();
+		$rate = $value->getRate();
+
+		if (!isset($this->_data[$currency][$rate])) {
+			$this->_data[$currency][$rate] = new NullPrice();
+		}
+		$this->_data[$currency][$rate] = $this->_data[$currency][$rate]->add($value);
 		return clone $this;
 	}
 
 	// @return Prices
 	public function subtract(PriceInterface $value) {
-		$this->_calculations[] = [__FUNCTION__ => $value];
+		$currency = (string) $value->getCurrency();
+		$rate = $value->getRate();
+
+		if (!isset($this->_data[$currency][$rate])) {
+			$this->_data[$currency][$rate] = new NullPrice();
+		}
+		$this->_data[$currency][$rate] = $this->_data[$currency][$rate]->subtract($value);
 		return clone $this;
 	}
 
 	/* Comparison */
 
 	public function isZero() {
-		return $this->_sum()->isZero();
-	}
-
-	/* Helpers */
-
-	// When reducing to a single sum we return and calc with Money.
-	// @return Money
-	protected function _singleSum($by) {
-		$byMethod = 'get' . ucfirst($by);
-		$result = new NullMoney();
-
-		foreach ($this->_calculations as $calculation) {
-			$method = key($calculation);
-			$value  = current($calculation);
-
-			if (is_object($value)) {
-				$value = $value->{$byMethod}();
+		foreach ($this->_data as $currency => $rates) {
+			foreach ($rates as $rate => $money) {
+				if (!$money->isZero()) {
+					return false;
+				}
 			}
-			$result = $result->{$method}($value);
 		}
-		return $result;
-	}
-
-	// @return array An array of Price(s).
-	protected function _splitSum($by) {
-		$byMethod = 'get' . ucfirst($by);
-		$results = [];
-
-		foreach ($this->_calculations as $calculation) {
-			$method = key($calculation);
-			$value  = current($calculation);
-
-			if (is_object($key = $value->{$byMethod}())) {
-				$key = (string) $key;
-			}
-			if (!isset($results[$key])) {
-				$results[$key] = new NullPrice();
-			}
-			$results[$key] = $results[$key]->{$method}($value);
-		}
-		return $results;
+		return true;
 	}
 }
 
