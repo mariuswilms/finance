@@ -82,16 +82,19 @@ class Prices {
 
 	/* Comparison */
 
-	public function greaterThan(PriceInterface $value) {
-		return $this->_sum()->greaterThan($value);
+	public function greaterThan(PriceInterface $value, $by = 'net') {
+		$byMethod = 'get' . ucfirst($by);
+		return $this->_singleSum($by)->greaterThan($value->{$byMethod}());
 	}
 
-	public function lessThan(PriceInterface $value) {
-		return $this->_sum()->lessThan($value);
+	public function lessThan(PriceInterface $value, $by = 'net') {
+		$byMethod = 'get' . ucfirst($by);
+		return $this->_singleSum($by)->lessThan($value->{$byMethod}());
 	}
 
-	public function equals(PriceInterface $value) {
-		return $this->_sum()->equals($value);
+	public function equals(PriceInterface $value, $by = 'net') {
+		$byMethod = 'get' . ucfirst($by);
+		return $this->_singleSum($by)->equals($value->{$byMethod}());
 	}
 
 	public function isZero() {
