@@ -118,8 +118,8 @@ class Prices {
 		return $result;
 	}
 
-	// @return array
-	protected function _sums($by) {
+	// @return array An array of Price(s).
+	protected function _splitSum($by) {
 		$byMethod = 'get' . ucfirst($by);
 		$results = [];
 

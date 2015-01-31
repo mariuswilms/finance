@@ -24,15 +24,15 @@ class Monies implements MoneyInterface {
 
 	// @return integer
 	public function getAmount() {
-		return $this->_sum()->getAmount();
+		return $this->_singleSum()->getAmount();
 	}
 
 	// @return Currency|array
 	public function getCurrency($split = false) {
 		if ($split) {
-			return $this->_sum('currency');
+			return $this->_splitSum('currency');
 		}
-		return $this->_sum()->getCurrency();
+		return $this->_singleSum()->getCurrency();
 	}
 
 	/* Calculation (lazy) */
@@ -52,52 +52,55 @@ class Monies implements MoneyInterface {
 	/* Comparison */
 
 	public function greaterThan(MoneyInterface $value) {
-		return $this->_sum()->greaterThan($value);
+		return $this->_singleSum()->greaterThan($value);
 	}
 
 	public function lessThan(MoneyInterface $value) {
-		return $this->_sum()->lessThan($value);
+		return $this->_singleSum()->lessThan($value);
 	}
 
 	public function equals(MoneyInterface $value) {
-		return $this->_sum()->equals($value);
+		return $this->_singleSum()->equals($value);
 	}
 
 	public function isZero() {
-		return $this->_sum()->isZero();
+		return $this->_singleSum()->isZero();
 	}
 
 	/* Helpers */
 
-	// @return Money|array
-	protected function _sum($by = null) {
-		if ($by) {
-			$byMethod = 'get' . ucfirst($by);
-			$results = [];
-
-			foreach ($this->_calculations as $calculation) {
-				$method = key($calculation);
-				$value  = current($calulation);
-
-				if (is_object($key = $value->{$byMethod}())) {
-					$key = (string) $key;
-				}
-				if (!isset($results[$key])) {
-					$results[$key] = new NullPrice();
-				}
-				$results[$key] = $results[$key]->{$method}($value);
-			}
-			return $results;
-		}
-		$result = new NullPrice();
+	// When reducing to a single sum we return and calc with Money.
+	// @return Money
+	protected function _singleSum() {
+		$result = new NullMoney();
 
 		foreach ($this->_calculations as $calculation) {
 			$method = key($calculation);
-			$value  = current($calulation);
+			$value  = current($calculation);
 
 			$result = $result->{$method}($value);
 		}
 		return $result;
+	}
+
+	// @return array An array of Money objects.
+	protected function _splitSum($by) {
+		$byMethod = 'get' . ucfirst($by);
+		$results = [];
+
+		foreach ($this->_calculations as $calculation) {
+			$method = key($calculation);
+			$value  = current($calculation);
+
+			if (is_object($key = $value->{$byMethod}())) {
+				$key = (string) $key;
+			}
+			if (!isset($results[$key])) {
+				$results[$key] = new NullMoney();
+			}
+			$results[$key] = $results[$key]->{$method}($value);
+		}
+		return $results;
 	}
 }
 
