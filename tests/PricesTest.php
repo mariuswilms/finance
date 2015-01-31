@@ -16,52 +16,40 @@ use Finance\Prices;
 
 class PricesTest extends \PHPUnit_Framework_TestCase {
 
-	public function testAddingWithMixedTaxRates() {
+	public function testAddingWithMixedNetRatesFailsOverGetNet() {
 		$subject = new Prices();
 
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 19)); // gross 2380
 		$subject = $subject->add(new Price(2000, 'EUR', 'net', 7)); // 2140
 
-		$expected = 4000;
-		$this->assertEquals($expected, $subject->getNet()->getAmount());
+		$this->setExpectedException('Exception');
+		$subject->getNet();
+	}
 
-		$expected = 2380 + 2140;
-		$this->assertEquals($expected, $subject->getGross()->getAmount());
+	public function testAddingWithMixedNetRatesFailsOverGetGross() {
+		$subject = new Prices();
 
-		$expected = 380 + 140;
-		$this->assertEquals($expected, $subject->getTax());
+		$subject = $subject->add(new Price(2000, 'EUR', 'net', 19)); // gross 2380
+		$subject = $subject->add(new Price(2000, 'EUR', 'net', 7)); // 2140
+
+		$this->setExpectedException('Exception');
+		$subject->getGross();
 	}
 
 	public function testAddingWithMixedTypes() {
 		$subject = new Prices();
 
-		$subject = $subject->add(new Price(2000, 'EUR', 'net', 19)); // gross 2380
-		$subject = $subject->add(new Price(2300, 'EUR', 'gross', 19)); // net 2000
+		$subject = $subject->add($a = new Price(2000, 'EUR', 'net', 19)); // gross 2380
+		$subject = $subject->add($b = new Price(2380, 'EUR', 'gross', 19)); // net 2000
 
-		$expected = 4000;
+		$expected = 2000 + 2000;
 		$this->assertEquals($expected, $subject->getNet()->getAmount());
 
 		$expected = 2380 + 2380;
 		$this->assertEquals($expected, $subject->getGross()->getAmount());
 
 		$expected = 380 + 380;
-		$this->assertEquals($expected, $subject->getTax());
-	}
-
-	public function testAddingWithMixedTypesAndRates() {
-		$subject = new Prices();
-
-		$subject = $subject->add(new Price(2000, 'EUR', 'net', 19)); // gross 2380
-		$subject = $subject->add(new Price(2140, 'EUR', 'gross', 7)); // net 2000
-
-		$expected = 4000;
-		$this->assertEquals($expected, $subject->getNet()->getAmount());
-
-		$expected = 2380 + 2140;
-		$this->assertEquals($expected, $subject->getGross()->getAmount());
-
-		$expected = 380 + 140;
-		$this->assertEquals($expected, $subject->getTax());
+		$this->assertEquals($expected, $subject->getTax()->getAmount());
 	}
 }
 

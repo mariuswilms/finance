@@ -53,3 +53,12 @@ the library as a dependency via:
 
 $ composer require atelierdisko/finance
 
+Running the Tests
+-----------------
+The preferred installation method is via composer. You can add
+the library as a dependency via:
+
+$ cd finance
+$ composer install --dev
+$ vendor/bin/phpunit tests
+

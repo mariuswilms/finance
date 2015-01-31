@@ -37,9 +37,7 @@ class Price implements PriceInterface {
 
 	protected $_rate;
 
-	protected $_roundingMode = null;
-
-	public function __construct($amount, $currency, $type, $rate, $roundingMode = PHP_ROUND_HALF_UP) {
+	public function __construct($amount, $currency, $type, $rate) {
 		if (!is_integer($amount)) {
 			throw new InvalidArgumentException('Price amount must be of type integer.');
 		}
@@ -59,13 +57,10 @@ class Price implements PriceInterface {
 			throw new InvalidArgumentException('Price tax rate must be of type integer.');
 		}
 		$this->_rate = $rate;
-
-		$this->_roundingMode = $roundingMode;
 	}
 
 	/* Access */
 
-	// @return integer
 	public function getAmount() {
 		return $this->_amount;
 	}
@@ -236,7 +231,7 @@ class Price implements PriceInterface {
 	}
 
 	protected function _castToInteger($amount) {
-		$amount = round($amount, $this->_roundingMode);
+		$amount = round($amount, PHP_ROUND_HALF_UP);
 
 		if (abs($amount) > PHP_INT_MAX) {
 			throw new OverflowException();

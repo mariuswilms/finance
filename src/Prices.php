@@ -109,7 +109,7 @@ class Prices {
 
 			foreach ($this->_calculations as $calculation) {
 				$method = key($calculation);
-				$value  = current($calulation);
+				$value  = current($calculation);
 
 				if (is_object($key = $value->{$byMethod}())) {
 					$key = (string) $key;
@@ -125,7 +125,7 @@ class Prices {
 
 		foreach ($this->_calculations as $calculation) {
 			$method = key($calculation);
-			$value  = current($calulation);
+			$value  = current($calculation);
 
 			$result = $result->{$method}($value);
 		}

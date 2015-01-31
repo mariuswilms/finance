@@ -27,8 +27,8 @@ class NullPriceTest extends \PHPUnit_Framework_TestCase {
 	public function testCurrency() {
 		$subject = new NullPrice();
 
-		$expected = null;
-		$result = $subject->getCurrency();
+		$expected = 'XXX';
+		$result = (string) $subject->getCurrency();
 		$this->assertEquals($expected, $result);
 	}
 

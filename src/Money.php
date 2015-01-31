@@ -23,9 +23,7 @@ class Money implements MoneyInterface {
 
 	protected $_currency;
 
-	protected $_roundingMode = null;
-
-	public function __construct($amount, $currency, $roundingMode = PHP_ROUND_HALF_UP) {
+	public function __construct($amount, $currency) {
 		if (!is_integer($amount)) {
 			throw new InvalidArgumentException('Money amount must be of type integer.');
 		}
@@ -35,8 +33,6 @@ class Money implements MoneyInterface {
 			throw new InvalidArgumentException('Money currency must be of type string or object.');
 		}
 		$this->_currency = is_object($currency) ? $currency : new Currency($currency);
-
-		$this->_roundingMode = $roundingMode;
 	}
 
 	/* Access */
@@ -135,7 +131,7 @@ class Money implements MoneyInterface {
 	}
 
 	protected function _castToInteger($amount) {
-		$amount = round($amount, $this->_roundingMode);
+		$amount = round($amount, PHP_ROUND_HALF_UP);
 
 		if (abs($amount) > PHP_INT_MAX) {
 			throw new OverflowException();

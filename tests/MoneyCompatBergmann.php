@@ -12,6 +12,8 @@
 
 namespace Finance;
 
+use Finance\Money;
+
 /**
  * This test is inherited from Sebastian Bergmann's "Money" project and is:
  * (c) Sebastian Bergmann <sebastian@phpunit.de>
@@ -67,7 +69,7 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	{
 		$m = new Money(0, new Currency('EUR'));
 
-		$this->assertInstanceOf('SebastianBergmann\\Money\\Money', $m);
+		$this->assertInstanceOf('Finance\\Money', $m);
 
 		return $m;
 	}
@@ -81,7 +83,7 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	{
 		$m = new Money(0, 'EUR');
 
-		$this->assertInstanceOf('SebastianBergmann\\Money\\Money', $m);
+		$this->assertInstanceOf('Finance\\Money', $m);
 
 		return $m;
 	}
