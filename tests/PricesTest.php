@@ -25,10 +25,10 @@ class PricesTest extends \PHPUnit_Framework_TestCase {
 		$sum = $subject->sum();
 
 		$expected = 2000;
-		$this->assertEquals($expected, $sum['EUR'][19]->getNet()->getAmount());
+		$this->assertEquals($expected, $sum[19]['EUR']->getNet()->getAmount());
 
 		$expected = 2000;
-		$this->assertEquals($expected, $sum['EUR'][7]->getNet()->getAmount());
+		$this->assertEquals($expected, $sum[7]['EUR']->getNet()->getAmount());
 	}
 
 	public function testAddingWithMixedNetRatesOverGetGross() {
@@ -40,10 +40,10 @@ class PricesTest extends \PHPUnit_Framework_TestCase {
 		$sum = $subject->sum();
 
 		$expected = 2380;
-		$this->assertEquals($expected, $sum['EUR'][19]->getGross()->getAmount());
+		$this->assertEquals($expected, $sum[19]['EUR']->getGross()->getAmount());
 
 		$expected = 2140;
-		$this->assertEquals($expected, $sum['EUR'][7]->getGross()->getAmount());
+		$this->assertEquals($expected, $sum[7]['EUR']->getGross()->getAmount());
 	}
 
 	public function testAddingWithMixedTypes() {
@@ -55,10 +55,10 @@ class PricesTest extends \PHPUnit_Framework_TestCase {
 		$sum = $subject->sum();
 
 		$expected = 2000 + 2000;
-		$this->assertEquals($expected, $sum['EUR'][19]->getNet()->getAmount());
+		$this->assertEquals($expected, $sum[19]['EUR']->getNet()->getAmount());
 
 		$expected = 2380 + 2380;
-		$this->assertEquals($expected, $sum['EUR'][19]->getGross()->getAmount());
+		$this->assertEquals($expected, $sum[19]['EUR']->getGross()->getAmount());
 	}
 
 	public function testAddingRepeatedTypeConversion() {
@@ -70,10 +70,10 @@ class PricesTest extends \PHPUnit_Framework_TestCase {
 		$sum = $subject->sum();
 
 		$expected = 2000 + 2000;
-		$this->assertEquals($expected, $sum['EUR'][19]->getNet()->getAmount());
+		$this->assertEquals($expected, $sum[19]['EUR']->getNet()->getAmount());
 
 		$expected = 2380 + 2380;
-		$this->assertEquals($expected, $sum['EUR'][19]->getGross()->getAmount());
+		$this->assertEquals($expected, $sum[19]['EUR']->getGross()->getAmount());
 	}
 }
 

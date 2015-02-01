@@ -20,6 +20,10 @@ class Monies {
 
 	protected $_data = [];
 
+	public function __construct(array $data = []) {
+		$this->_data = $data;
+	}
+
 	/* Access */
 
 	// @return array An array with Currency as key and Money as value.
@@ -31,24 +35,28 @@ class Monies {
 
 	// @return Monies
 	public function add(MoneyInterface $value) {
+		$data = $this->_data;
 		$currency = (string) $value->getCurrency();
 
-		if (!isset($this->_data[$currency])) {
-			$this->_data[$currency] = new NullMoney();
+		if (!isset($data[$currency])) {
+			$data[$currency] = new NullMoney();
 		}
-		$this->_data[$currency] = $this->_data[$currency]->add($value);
-		return clone $this;
+		$data[$currency] = $data[$currency]->add($value);
+
+		return new Monies($data);
 	}
 
 	// @return Monies
 	public function subtract(MoneyInterface $value) {
+		$data = $this->_data;
 		$currency = (string) $value->getCurrency();
 
-		if (!isset($this->_data[$currency])) {
-			$this->_data[$currency] = new NullMoney();
+		if (!isset($data[$currency])) {
+			$data[$currency] = new NullMoney();
 		}
-		$this->_data[$currency] = $this->_data[$currency]->subtract($value);
-		return clone $this;
+		$data[$currency] = $data[$currency]->subtract($value);
+
+		return new Monies($data);
 	}
 
 	/* Comparison */

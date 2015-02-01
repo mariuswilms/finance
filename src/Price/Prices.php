@@ -23,6 +23,10 @@ class Prices {
 
 	protected $_data = [];
 
+	public function __construct(array $data = []) {
+		$this->_data = $data;
+	}
+
 	/* Access */
 
 	public function sum() {
@@ -33,26 +37,32 @@ class Prices {
 
 	// @return Prices
 	public function add(PriceInterface $value) {
+		$data = $this->_data;
+
 		$currency = (string) $value->getCurrency();
 		$rate = $value->getRate();
 
-		if (!isset($this->_data[$currency][$rate])) {
-			$this->_data[$currency][$rate] = new NullPrice();
+		if (!isset($data[$rate][$currency])) {
+			$data[$rate][$currency] = new NullPrice();
 		}
-		$this->_data[$currency][$rate] = $this->_data[$currency][$rate]->add($value);
-		return clone $this;
+		$data[$rate][$currency] = $data[$rate][$currency]->add($value);
+
+		return new Prices($data);
 	}
 
 	// @return Prices
 	public function subtract(PriceInterface $value) {
+		$data = $this->_data;
+
 		$currency = (string) $value->getCurrency();
 		$rate = $value->getRate();
 
-		if (!isset($this->_data[$currency][$rate])) {
-			$this->_data[$currency][$rate] = new NullPrice();
+		if (!isset($data[$rate][$currency])) {
+			$data[$rate][$currency] = new NullPrice();
 		}
-		$this->_data[$currency][$rate] = $this->_data[$currency][$rate]->subtract($value);
-		return clone $this;
+		$data[$rate][$currency] = $data[$rate][$currency]->subtract($value);
+
+		return new Prices($data);
 	}
 
 	/* Comparison */
