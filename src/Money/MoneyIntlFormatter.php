@@ -14,6 +14,7 @@ namespace AD\Finance\Money;
 
 use NumberFormatter;
 use AD\Finance\Money\MoneyInterface;
+use AD\Finance\Money\NullMoney;
 
 class MoneyIntlFormatter implements \Formatter {
 
@@ -24,6 +25,9 @@ class MoneyIntlFormatter implements \Formatter {
 	}
 
 	public function format(MoneyInterface $value) {
+		if ($value instanceof NullMoney) {
+			return 0;
+		}
 		return $this->_formatter->formatCurrency(
 			$value->getAmount() / $value->getCurrency()->getSubUnit(),
 			$value->getCurrency()->getCurrencyCode()
