@@ -10,9 +10,9 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace Finance;
+namespace AD\Finance;
 
-use Finance\Price;
+use AD\Finance\Price;
 
 class PriceTest extends \PHPUnit_Framework_TestCase {
 

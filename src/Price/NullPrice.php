@@ -10,14 +10,13 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace Finance;
+namespace AD\Finance\Price;
 
-use Finance\MoneyInterface;
-use Finance\Currency;
+use AD\Finance\Currency;
+use AD\Finance\Money\NullMoney;
+use AD\Finance\Price\PriceInterface;
 
-class NullMoney implements MoneyInterface {
-
-	/* Access */
+class NullPrice implements PriceInterface {
 
 	public function getAmount() {
 		return 0;
@@ -27,17 +26,35 @@ class NullMoney implements MoneyInterface {
 		return new Currency('XXX');
 	}
 
-	/* Calculation */
+	public function getType() {
+		return 'net';
+	}
+
+	public function getRate() {
+		return 0;
+	}
+
+	public function getNet() {
+		return new NullMoney();
+	}
+
+	public function getGross() {
+		return new NullMoney();
+	}
+
+	public function getTax() {
+		return new NullMoney();
+	}
 
 	public function multiply($factor) {
 		return clone $this;
 	}
 
-	public function add(MoneyInterface $value) {
+	public function add(PriceInterface $value) {
 		return clone $value;
 	}
 
-	public function subtract(MoneyInterface $value) {
+	public function subtract(PriceInterface $value) {
 		return $value->negate();
 	}
 
@@ -45,17 +62,15 @@ class NullMoney implements MoneyInterface {
 		return clone $this;
 	}
 
-	/* Comparison */
-
-	public function greaterThan(MoneyInterface $value) {
+	public function greaterThan(PriceInterface $value) {
 		return $this->getAmount() > $value->getAmount();
 	}
 
-	public function lessThan(MoneyInterface $value) {
+	public function lessThan(PriceInterface $value) {
 		return $this->getAmount() < $value->getAmount();
 	}
 
-	public function equals(MoneyInterface $value) {
+	public function equals(PriceInterface $value) {
 		return $this->getAmount() === $value->getAmount();
 	}
 

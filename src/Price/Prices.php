@@ -10,13 +10,13 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace Finance;
+namespace AD\Finance\Price;
 
-use Finance\Price;
-use Finance\PriceInterface;
-use Finance\Money;
-use Finance\NullMoney;
-use Finance\NullPrice;
+use AD\Finance\Money;
+use AD\Finance\Money\NullMoney;
+use AD\Finance\Price;
+use AD\Finance\Price\PriceInterface;
+use AD\Finance\Price\NullPrice;
 
 // Allows mixing prices with different currencies and rates.
 class Prices {

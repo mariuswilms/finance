@@ -10,33 +10,29 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace Finance;
+namespace AD\Finance\Money;
 
-interface PriceInterface {
+interface MoneyInterface {
 
 	public function getAmount();
 
 	public function getCurrency();
 
-	public function getType();
-
-	public function getRate();
-
-	public function getNet();
-
-	public function getGross();
-
-	public function getTax();
+	public function negate();
 
 	public function multiply($factor);
 
-	public function add(PriceInterface $value);
+	public function add(MoneyInterface $value);
 
-	public function subtract(PriceInterface $value);
+	public function subtract(MoneyInterface $value);
+
+	public function equals(MoneyInterface $value);
+
+	public function greaterThan(MoneyInterface $value);
+
+	public function lessThan(MoneyInterface $value);
 
 	public function isZero();
-
-	public function negate();
 }
 
 ?>

@@ -10,14 +10,14 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace Finance;
+namespace AD\Finance;
 
 use Exception;
 use InvalidArgumentException;
 use OverflowException;
-use Finance\Money;
-use Finance\Currency;
-use Finance\PriceInterface;
+use AD\Finance\Money;
+use AD\Finance\Currency;
+use AD\Finance\Price\PriceInterface;
 
 /**
  * A class which is loosely based upon the Money class. In contrast to money

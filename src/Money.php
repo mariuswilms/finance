@@ -10,12 +10,12 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace Finance;
+namespace AD\Finance;
 
 use Exception;
 use InvalidArgumentException;
-use Finance\Currency;
-use Finance\MoneyInterface;
+use AD\Finance\Currency;
+use AD\Finance\Money\MoneyInterface;
 
 class Money implements MoneyInterface {
 

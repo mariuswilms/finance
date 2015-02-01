@@ -10,10 +10,10 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace Finance;
+namespace AD\Finance\Money;
 
-use Finance\MoneyInterface;
-use Finance\NullMoney;
+use AD\Finance\Money\MoneyInterface;
+use AD\Finance\Money\NullMoney;
 
 // Allows mixing Money objects with differnt currencies.
 class Monies {

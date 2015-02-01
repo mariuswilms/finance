@@ -10,9 +10,9 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace Finance;
+namespace AD\Finance;
 
-use Finance\Money;
+use AD\Finance\Money;
 
 /**
  * This test is inherited from Sebastian Bergmann's "Money" project and is:
@@ -30,8 +30,8 @@ use Finance\Money;
 class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * @covers			  \Finance\Money::__construct
-	 * @uses			  \Finance\Currency
+	 * @covers			  \AD\Finance\Money::__construct
+	 * @uses			  \AD\Finance\Currency
 	 * @expectedException \InvalidArgumentException
 	 */
 	public function testExceptionIsRaisedForInvalidConstructorArguments()
@@ -40,9 +40,9 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers			  \Finance\Money::__construct
-	 * @covers			  \Finance\Money::handleCurrencyArgument
-	 * @uses			  \Finance\Currency
+	 * @covers			  \AD\Finance\Money::__construct
+	 * @covers			  \AD\Finance\Money::handleCurrencyArgument
+	 * @uses			  \AD\Finance\Currency
 	 * @expectedException \InvalidArgumentException
 	 */
 	public function testExceptionIsRaisedForInvalidConstructorArguments2()
@@ -51,8 +51,8 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers			  \Finance\Money::fromString
-	 * @uses			  \Finance\Currency
+	 * @covers			  \AD\Finance\Money::fromString
+	 * @uses			  \AD\Finance\Currency
 	 * @expectedException \InvalidArgumentException
 	 */
 	// public function testExceptionIsRaisedForInvalidConstructorArguments3()
@@ -61,9 +61,9 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	// }
 
 	/**
-	 * @covers \Finance\Money::__construct
-	 * @covers \Finance\Money::handleCurrencyArgument
-	 * @uses   \Finance\Currency
+	 * @covers \AD\Finance\Money::__construct
+	 * @covers \AD\Finance\Money::handleCurrencyArgument
+	 * @uses   \AD\Finance\Currency
 	 */
 	public function testObjectCanBeConstructedForValidConstructorArguments()
 	{
@@ -75,9 +75,9 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers \Finance\Money::__construct
-	 * @covers \Finance\Money::handleCurrencyArgument
-	 * @uses   \Finance\Currency
+	 * @covers \AD\Finance\Money::__construct
+	 * @covers \AD\Finance\Money::handleCurrencyArgument
+	 * @uses   \AD\Finance\Currency
 	 */
 	public function testObjectCanBeConstructedForValidConstructorArguments2()
 	{
@@ -89,10 +89,10 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers \Finance\Money::fromString
-	 * @uses   \Finance\Money::__construct
-	 * @uses   \Finance\Money::handleCurrencyArgument
-	 * @uses   \Finance\Currency
+	 * @covers \AD\Finance\Money::fromString
+	 * @uses   \AD\Finance\Money::__construct
+	 * @uses   \AD\Finance\Money::handleCurrencyArgument
+	 * @uses   \AD\Finance\Currency
 	 */
 	// public function testObjectCanBeConstructedFromStringValue()
 	// {
@@ -103,10 +103,10 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	// }
 
 	/**
-	 * @covers \Finance\Money::fromString
-	 * @uses   \Finance\Money::__construct
-	 * @uses   \Finance\Money::handleCurrencyArgument
-	 * @uses   \Finance\Currency
+	 * @covers \AD\Finance\Money::fromString
+	 * @uses   \AD\Finance\Money::__construct
+	 * @uses   \AD\Finance\Money::handleCurrencyArgument
+	 * @uses   \AD\Finance\Currency
 	 */
 	// public function testObjectCanBeConstructedFromStringValue2()
 	// {
@@ -117,7 +117,7 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	// }
 
 	/**
-	 * @covers	\Finance\Money::getAmount
+	 * @covers	\AD\Finance\Money::getAmount
 	 * @depends testObjectCanBeConstructedForValidConstructorArguments
 	 */
 	public function testAmountCanBeRetrieved(Money $m)
@@ -126,8 +126,8 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers	\Finance\Money::getCurrency
-	 * @uses	\Finance\Currency
+	 * @covers	\AD\Finance\Money::getCurrency
+	 * @uses	\AD\Finance\Currency
 	 * @depends testObjectCanBeConstructedForValidConstructorArguments
 	 */
 	public function testCurrencyCanBeRetrieved(Money $m)
@@ -136,15 +136,15 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers \Finance\Money::add
-	 * @covers \Finance\Money::newMoney
-	 * @covers \Finance\Money::assertSameCurrency
-	 * @uses   \Finance\Money::__construct
-	 * @uses   \Finance\Money::handleCurrencyArgument
-	 * @uses   \Finance\Money::getAmount
-	 * @uses   \Finance\Money::getCurrency
-	 * @uses   \Finance\Money::assertIsInteger
-	 * @uses   \Finance\Currency
+	 * @covers \AD\Finance\Money::add
+	 * @covers \AD\Finance\Money::newMoney
+	 * @covers \AD\Finance\Money::assertSameCurrency
+	 * @uses   \AD\Finance\Money::__construct
+	 * @uses   \AD\Finance\Money::handleCurrencyArgument
+	 * @uses   \AD\Finance\Money::getAmount
+	 * @uses   \AD\Finance\Money::getCurrency
+	 * @uses   \AD\Finance\Money::assertIsInteger
+	 * @uses   \AD\Finance\Currency
 	 */
 	public function testAnotherMoneyObjectWithSameCurrencyCanBeAdded()
 	{
@@ -158,15 +158,15 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers			  \Finance\Money::add
-	 * @covers			  \Finance\Money::newMoney
-	 * @covers			  \Finance\Money::assertSameCurrency
-	 * @covers			  \Finance\Money::assertIsInteger
-	 * @uses			  \Finance\Money::__construct
-	 * @uses			  \Finance\Money::handleCurrencyArgument
-	 * @uses			  \Finance\Money::getAmount
-	 * @uses			  \Finance\Money::getCurrency
-	 * @uses			  \Finance\Currency
+	 * @covers			  \AD\Finance\Money::add
+	 * @covers			  \AD\Finance\Money::newMoney
+	 * @covers			  \AD\Finance\Money::assertSameCurrency
+	 * @covers			  \AD\Finance\Money::assertIsInteger
+	 * @uses			  \AD\Finance\Money::__construct
+	 * @uses			  \AD\Finance\Money::handleCurrencyArgument
+	 * @uses			  \AD\Finance\Money::getAmount
+	 * @uses			  \AD\Finance\Money::getCurrency
+	 * @uses			  \AD\Finance\Currency
 	 * @expectedException \OverflowException
 	 */
 	public function testExceptionIsThrownForOverflowingAddition()
@@ -177,12 +177,12 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers			  \Finance\Money::assertInsideIntegerBounds
-	 * @uses			  \Finance\Money::__construct
-	 * @uses			  \Finance\Money::handleCurrencyArgument
-	 * @uses			  \Finance\Money::multiply
-	 * @uses			  \Finance\Money::castToInt
-	 * @uses			  \Finance\Currency
+	 * @covers			  \AD\Finance\Money::assertInsideIntegerBounds
+	 * @uses			  \AD\Finance\Money::__construct
+	 * @uses			  \AD\Finance\Money::handleCurrencyArgument
+	 * @uses			  \AD\Finance\Money::multiply
+	 * @uses			  \AD\Finance\Money::castToInt
+	 * @uses			  \AD\Finance\Currency
 	 * @expectedException \OverflowException
 	 */
 	public function testExceptionIsRaisedForIntegerOverflow()
@@ -192,14 +192,14 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers			  \Finance\Money::add
-	 * @covers			  \Finance\Money::assertSameCurrency
-	 * @uses			  \Finance\Money::__construct
-	 * @uses			  \Finance\Money::handleCurrencyArgument
-	 * @uses			  \Finance\Money::getAmount
-	 * @uses			  \Finance\Money::getCurrency
-	 * @uses			  \Finance\Currency
-	 * @expectedException \Finance\CurrencyMismatchException
+	 * @covers			  \AD\Finance\Money::add
+	 * @covers			  \AD\Finance\Money::assertSameCurrency
+	 * @uses			  \AD\Finance\Money::__construct
+	 * @uses			  \AD\Finance\Money::handleCurrencyArgument
+	 * @uses			  \AD\Finance\Money::getAmount
+	 * @uses			  \AD\Finance\Money::getCurrency
+	 * @uses			  \AD\Finance\Currency
+	 * @expectedException \AD\Finance\CurrencyMismatchException
 	 */
 	public function testExceptionIsRaisedWhenMoneyObjectWithDifferentCurrencyIsAdded()
 	{
@@ -210,15 +210,15 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers \Finance\Money::subtract
-	 * @covers \Finance\Money::newMoney
-	 * @covers \Finance\Money::assertSameCurrency
-	 * @uses   \Finance\Money::__construct
-	 * @uses   \Finance\Money::handleCurrencyArgument
-	 * @uses   \Finance\Money::getAmount
-	 * @uses   \Finance\Money::getCurrency
-	 * @uses   \Finance\Money::assertIsInteger
-	 * @uses   \Finance\Currency
+	 * @covers \AD\Finance\Money::subtract
+	 * @covers \AD\Finance\Money::newMoney
+	 * @covers \AD\Finance\Money::assertSameCurrency
+	 * @uses   \AD\Finance\Money::__construct
+	 * @uses   \AD\Finance\Money::handleCurrencyArgument
+	 * @uses   \AD\Finance\Money::getAmount
+	 * @uses   \AD\Finance\Money::getCurrency
+	 * @uses   \AD\Finance\Money::assertIsInteger
+	 * @uses   \AD\Finance\Currency
 	 */
 	public function testAnotherMoneyObjectWithSameCurrencyCanBeSubtracted()
 	{
@@ -232,15 +232,15 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers			  \Finance\Money::subtract
-	 * @covers			  \Finance\Money::newMoney
-	 * @covers			  \Finance\Money::assertSameCurrency
-	 * @covers			  \Finance\Money::assertIsInteger
-	 * @uses			  \Finance\Money::__construct
-	 * @uses			  \Finance\Money::handleCurrencyArgument
-	 * @uses			  \Finance\Money::getAmount
-	 * @uses			  \Finance\Money::getCurrency
-	 * @uses			  \Finance\Currency
+	 * @covers			  \AD\Finance\Money::subtract
+	 * @covers			  \AD\Finance\Money::newMoney
+	 * @covers			  \AD\Finance\Money::assertSameCurrency
+	 * @covers			  \AD\Finance\Money::assertIsInteger
+	 * @uses			  \AD\Finance\Money::__construct
+	 * @uses			  \AD\Finance\Money::handleCurrencyArgument
+	 * @uses			  \AD\Finance\Money::getAmount
+	 * @uses			  \AD\Finance\Money::getCurrency
+	 * @uses			  \AD\Finance\Currency
 	 * @expectedException \OverflowException
 	 */
 	public function testExceptionIsThrownForOverflowingSubtraction()
@@ -251,14 +251,14 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers			  \Finance\Money::subtract
-	 * @covers			  \Finance\Money::assertSameCurrency
-	 * @uses			  \Finance\Money::__construct
-	 * @uses			  \Finance\Money::handleCurrencyArgument
-	 * @uses			  \Finance\Money::getAmount
-	 * @uses			  \Finance\Money::getCurrency
-	 * @uses			  \Finance\Currency
-	 * @expectedException \Finance\CurrencyMismatchException
+	 * @covers			  \AD\Finance\Money::subtract
+	 * @covers			  \AD\Finance\Money::assertSameCurrency
+	 * @uses			  \AD\Finance\Money::__construct
+	 * @uses			  \AD\Finance\Money::handleCurrencyArgument
+	 * @uses			  \AD\Finance\Money::getAmount
+	 * @uses			  \AD\Finance\Money::getCurrency
+	 * @uses			  \AD\Finance\Currency
+	 * @expectedException \AD\Finance\CurrencyMismatchException
 	 */
 	public function testExceptionIsRaisedWhenMoneyObjectWithDifferentCurrencyIsSubtracted()
 	{
@@ -269,12 +269,12 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers \Finance\Money::negate
-	 * @covers \Finance\Money::newMoney
-	 * @uses   \Finance\Money::__construct
-	 * @uses   \Finance\Money::handleCurrencyArgument
-	 * @uses   \Finance\Money::getAmount
-	 * @uses   \Finance\Currency
+	 * @covers \AD\Finance\Money::negate
+	 * @covers \AD\Finance\Money::newMoney
+	 * @uses   \AD\Finance\Money::__construct
+	 * @uses   \AD\Finance\Money::handleCurrencyArgument
+	 * @uses   \AD\Finance\Money::getAmount
+	 * @uses   \AD\Finance\Currency
 	 */
 	public function testCanBeNegated()
 	{
@@ -286,14 +286,14 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers \Finance\Money::multiply
-	 * @covers \Finance\Money::newMoney
-	 * @covers \Finance\Money::castToInt
-	 * @uses   \Finance\Money::__construct
-	 * @uses   \Finance\Money::handleCurrencyArgument
-	 * @uses   \Finance\Money::getAmount
-	 * @uses   \Finance\Money::assertInsideIntegerBounds
-	 * @uses   \Finance\Currency
+	 * @covers \AD\Finance\Money::multiply
+	 * @covers \AD\Finance\Money::newMoney
+	 * @covers \AD\Finance\Money::castToInt
+	 * @uses   \AD\Finance\Money::__construct
+	 * @uses   \AD\Finance\Money::handleCurrencyArgument
+	 * @uses   \AD\Finance\Money::getAmount
+	 * @uses   \AD\Finance\Money::assertInsideIntegerBounds
+	 * @uses   \AD\Finance\Currency
 	 */
 	public function testCanBeMultipliedByAFactor()
 	{
@@ -305,10 +305,10 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers			  \Finance\Money::multiply
-	 * @uses			  \Finance\Money::__construct
-	 * @uses			  \Finance\Money::handleCurrencyArgument
-	 * @uses			  \Finance\Currency
+	 * @covers			  \AD\Finance\Money::multiply
+	 * @uses			  \AD\Finance\Money::__construct
+	 * @uses			  \AD\Finance\Money::handleCurrencyArgument
+	 * @uses			  \AD\Finance\Currency
 	 * @expectedException \InvalidArgumentException
 	 */
 	public function testExceptionIsRaisedWhenMultipliedUsingInvalidRoundingMode()
@@ -318,12 +318,12 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers \Finance\Money::allocateToTargets
-	 * @covers \Finance\Money::newMoney
-	 * @uses   \Finance\Money::__construct
-	 * @uses   \Finance\Money::handleCurrencyArgument
-	 * @uses   \Finance\Money::getAmount
-	 * @uses   \Finance\Currency
+	 * @covers \AD\Finance\Money::allocateToTargets
+	 * @covers \AD\Finance\Money::newMoney
+	 * @uses   \AD\Finance\Money::__construct
+	 * @uses   \AD\Finance\Money::handleCurrencyArgument
+	 * @uses   \AD\Finance\Money::getAmount
+	 * @uses   \AD\Finance\Currency
 	 */
 	// public function testCanBeAllocatedToNumberOfTargets()
 	// {
@@ -348,18 +348,18 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	// }
 
 	/**
-	 * @covers \Finance\Money::extractPercentage
-	 * @uses   \Finance\Money::__construct
-	 * @uses   \Finance\Money::getAmount
-	 * @uses   \Finance\Money::getCurrency
-	 * @uses   \Finance\Money::subtract
-	 * @uses   \Finance\Money::assertSameCurrency
-	 * @uses   \Finance\Money::assertIsInteger
-	 * @uses   \Finance\Money::assertInsideIntegerBounds
-	 * @uses   \Finance\Money::castToInt
-	 * @uses   \Finance\Money::newMoney
-	 * @uses   \Finance\Money::handleCurrencyArgument
-	 * @uses   \Finance\Currency
+	 * @covers \AD\Finance\Money::extractPercentage
+	 * @uses   \AD\Finance\Money::__construct
+	 * @uses   \AD\Finance\Money::getAmount
+	 * @uses   \AD\Finance\Money::getCurrency
+	 * @uses   \AD\Finance\Money::subtract
+	 * @uses   \AD\Finance\Money::assertSameCurrency
+	 * @uses   \AD\Finance\Money::assertIsInteger
+	 * @uses   \AD\Finance\Money::assertInsideIntegerBounds
+	 * @uses   \AD\Finance\Money::castToInt
+	 * @uses   \AD\Finance\Money::newMoney
+	 * @uses   \AD\Finance\Money::handleCurrencyArgument
+	 * @uses   \AD\Finance\Currency
 	 */
 	// public function testPercentageCanBeExtracted()
 	// {
@@ -371,10 +371,10 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	// }
 
 	/**
-	 * @covers			  \Finance\Money::allocateToTargets
-	 * @uses			  \Finance\Money::__construct
-	 * @uses			  \Finance\Money::handleCurrencyArgument
-	 * @uses			  \Finance\Currency
+	 * @covers			  \AD\Finance\Money::allocateToTargets
+	 * @uses			  \AD\Finance\Money::__construct
+	 * @uses			  \AD\Finance\Money::handleCurrencyArgument
+	 * @uses			  \AD\Finance\Currency
 	 * @expectedException \InvalidArgumentException
 	 */
 	// public function testExceptionIsRaisedWhenTryingToAllocateToInvalidNumberOfTargets()
@@ -384,14 +384,14 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	// }
 
 	/**
-	 * @covers \Finance\Money::allocateByRatios
-	 * @covers \Finance\Money::newMoney
-	 * @covers \Finance\Money::castToInt
-	 * @uses   \Finance\Money::__construct
-	 * @uses   \Finance\Money::handleCurrencyArgument
-	 * @uses   \Finance\Money::getAmount
-	 * @uses   \Finance\Money::assertInsideIntegerBounds
-	 * @uses   \Finance\Currency
+	 * @covers \AD\Finance\Money::allocateByRatios
+	 * @covers \AD\Finance\Money::newMoney
+	 * @covers \AD\Finance\Money::castToInt
+	 * @uses   \AD\Finance\Money::__construct
+	 * @uses   \AD\Finance\Money::handleCurrencyArgument
+	 * @uses   \AD\Finance\Money::getAmount
+	 * @uses   \AD\Finance\Money::assertInsideIntegerBounds
+	 * @uses   \AD\Finance\Currency
 	 */
 	// public function testCanBeAllocatedByRatios()
 	// {
@@ -408,13 +408,13 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	// }
 
 	/**
-	 * @covers \Finance\Money::compareTo
-	 * @covers \Finance\Money::assertSameCurrency
-	 * @uses   \Finance\Money::__construct
-	 * @uses   \Finance\Money::handleCurrencyArgument
-	 * @uses   \Finance\Money::getAmount
-	 * @uses   \Finance\Money::getCurrency
-	 * @uses   \Finance\Currency
+	 * @covers \AD\Finance\Money::compareTo
+	 * @covers \AD\Finance\Money::assertSameCurrency
+	 * @uses   \AD\Finance\Money::__construct
+	 * @uses   \AD\Finance\Money::handleCurrencyArgument
+	 * @uses   \AD\Finance\Money::getAmount
+	 * @uses   \AD\Finance\Money::getCurrency
+	 * @uses   \AD\Finance\Currency
 	 */
 	// public function testCanBeComparedToAnotherMoneyObjectWithSameCurrency()
 	// {
@@ -427,14 +427,14 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	// }
 
 	/**
-	 * @covers	\Finance\Money::greaterThan
-	 * @covers	\Finance\Money::assertSameCurrency
-	 * @uses	\Finance\Money::__construct
-	 * @uses	\Finance\Money::handleCurrencyArgument
-	 * @uses	\Finance\Money::compareTo
-	 * @uses	\Finance\Money::getAmount
-	 * @uses	\Finance\Money::getCurrency
-	 * @uses	\Finance\Currency
+	 * @covers	\AD\Finance\Money::greaterThan
+	 * @covers	\AD\Finance\Money::assertSameCurrency
+	 * @uses	\AD\Finance\Money::__construct
+	 * @uses	\AD\Finance\Money::handleCurrencyArgument
+	 * @uses	\AD\Finance\Money::compareTo
+	 * @uses	\AD\Finance\Money::getAmount
+	 * @uses	\AD\Finance\Money::getCurrency
+	 * @uses	\AD\Finance\Currency
 	 * @depends testCanBeComparedToAnotherMoneyObjectWithSameCurrency
 	 */
 	public function testCanBeComparedToAnotherMoneyObjectWithSameCurrency2()
@@ -447,14 +447,14 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers	\Finance\Money::lessThan
-	 * @covers	\Finance\Money::assertSameCurrency
-	 * @uses	\Finance\Money::__construct
-	 * @uses	\Finance\Money::handleCurrencyArgument
-	 * @uses	\Finance\Money::compareTo
-	 * @uses	\Finance\Money::getAmount
-	 * @uses	\Finance\Money::getCurrency
-	 * @uses	\Finance\Currency
+	 * @covers	\AD\Finance\Money::lessThan
+	 * @covers	\AD\Finance\Money::assertSameCurrency
+	 * @uses	\AD\Finance\Money::__construct
+	 * @uses	\AD\Finance\Money::handleCurrencyArgument
+	 * @uses	\AD\Finance\Money::compareTo
+	 * @uses	\AD\Finance\Money::getAmount
+	 * @uses	\AD\Finance\Money::getCurrency
+	 * @uses	\AD\Finance\Currency
 	 * @depends testCanBeComparedToAnotherMoneyObjectWithSameCurrency
 	 */
 	public function testCanBeComparedToAnotherMoneyObjectWithSameCurrency3()
@@ -467,14 +467,14 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers	\Finance\Money::equals
-	 * @covers	\Finance\Money::assertSameCurrency
-	 * @uses	\Finance\Money::__construct
-	 * @uses	\Finance\Money::handleCurrencyArgument
-	 * @uses	\Finance\Money::compareTo
-	 * @uses	\Finance\Money::getAmount
-	 * @uses	\Finance\Money::getCurrency
-	 * @uses	\Finance\Currency
+	 * @covers	\AD\Finance\Money::equals
+	 * @covers	\AD\Finance\Money::assertSameCurrency
+	 * @uses	\AD\Finance\Money::__construct
+	 * @uses	\AD\Finance\Money::handleCurrencyArgument
+	 * @uses	\AD\Finance\Money::compareTo
+	 * @uses	\AD\Finance\Money::getAmount
+	 * @uses	\AD\Finance\Money::getCurrency
+	 * @uses	\AD\Finance\Currency
 	 * @depends testCanBeComparedToAnotherMoneyObjectWithSameCurrency
 	 */
 	public function testCanBeComparedToAnotherMoneyObjectWithSameCurrency4()
@@ -489,16 +489,16 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers	\Finance\Money::greaterThanOrEqual
-	 * @covers	\Finance\Money::assertSameCurrency
-	 * @uses	\Finance\Money::__construct
-	 * @uses	\Finance\Money::handleCurrencyArgument
-	 * @uses	\Finance\Money::greaterThan
-	 * @uses	\Finance\Money::equals
-	 * @uses	\Finance\Money::compareTo
-	 * @uses	\Finance\Money::getAmount
-	 * @uses	\Finance\Money::getCurrency
-	 * @uses	\Finance\Currency
+	 * @covers	\AD\Finance\Money::greaterThanOrEqual
+	 * @covers	\AD\Finance\Money::assertSameCurrency
+	 * @uses	\AD\Finance\Money::__construct
+	 * @uses	\AD\Finance\Money::handleCurrencyArgument
+	 * @uses	\AD\Finance\Money::greaterThan
+	 * @uses	\AD\Finance\Money::equals
+	 * @uses	\AD\Finance\Money::compareTo
+	 * @uses	\AD\Finance\Money::getAmount
+	 * @uses	\AD\Finance\Money::getCurrency
+	 * @uses	\AD\Finance\Currency
 	 * @depends testCanBeComparedToAnotherMoneyObjectWithSameCurrency
 	 */
 	public function testCanBeComparedToAnotherMoneyObjectWithSameCurrency5()
@@ -514,16 +514,16 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers	\Finance\Money::lessThanOrEqual
-	 * @covers	\Finance\Money::assertSameCurrency
-	 * @uses	\Finance\Money::__construct
-	 * @uses	\Finance\Money::handleCurrencyArgument
-	 * @uses	\Finance\Money::lessThan
-	 * @uses	\Finance\Money::equals
-	 * @uses	\Finance\Money::compareTo
-	 * @uses	\Finance\Money::getAmount
-	 * @uses	\Finance\Money::getCurrency
-	 * @uses	\Finance\Currency
+	 * @covers	\AD\Finance\Money::lessThanOrEqual
+	 * @covers	\AD\Finance\Money::assertSameCurrency
+	 * @uses	\AD\Finance\Money::__construct
+	 * @uses	\AD\Finance\Money::handleCurrencyArgument
+	 * @uses	\AD\Finance\Money::lessThan
+	 * @uses	\AD\Finance\Money::equals
+	 * @uses	\AD\Finance\Money::compareTo
+	 * @uses	\AD\Finance\Money::getAmount
+	 * @uses	\AD\Finance\Money::getCurrency
+	 * @uses	\AD\Finance\Currency
 	 * @depends testCanBeComparedToAnotherMoneyObjectWithSameCurrency
 	 */
 	public function testCanBeComparedToAnotherMoneyObjectWithSameCurrency6()
@@ -539,13 +539,13 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers			  \Finance\Money::compareTo
-	 * @covers			  \Finance\Money::assertSameCurrency
-	 * @uses			  \Finance\Money::__construct
-	 * @uses			  \Finance\Money::handleCurrencyArgument
-	 * @uses			  \Finance\Money::getCurrency
-	 * @uses			  \Finance\Currency
-	 * @expectedException \Finance\CurrencyMismatchException
+	 * @covers			  \AD\Finance\Money::compareTo
+	 * @covers			  \AD\Finance\Money::assertSameCurrency
+	 * @uses			  \AD\Finance\Money::__construct
+	 * @uses			  \AD\Finance\Money::handleCurrencyArgument
+	 * @uses			  \AD\Finance\Money::getCurrency
+	 * @uses			  \AD\Finance\Currency
+	 * @expectedException \AD\Finance\CurrencyMismatchException
 	 */
 	// public function testExceptionIsRaisedWhenComparedToMoneyObjectWithDifferentCurrency()
 	// {
@@ -556,10 +556,10 @@ class MoneyCompatBergmannTest extends \PHPUnit_Framework_TestCase {
 	// }
 
 	/**
-	 * @covers	 \Finance\Money::jsonSerialize
-	 * @uses	 \Finance\Money::__construct
-	 * @uses	 \Finance\Currency
-	 * @uses	 \Finance\Money::handleCurrencyArgument
+	 * @covers	 \AD\Finance\Money::jsonSerialize
+	 * @uses	 \AD\Finance\Money::__construct
+	 * @uses	 \AD\Finance\Currency
+	 * @uses	 \AD\Finance\Money::handleCurrencyArgument
 	 * @requires PHP 5.4.0
 	 */
 	// public function testCanBeSerializedToJson()

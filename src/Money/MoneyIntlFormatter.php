@@ -10,10 +10,10 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace Finance;
+namespace AD\Finance\Money;
 
 use NumberFormatter;
-use Finance\MoneyInterface;
+use AD\Finance\Money\MoneyInterface;
 
 class MoneyIntlFormatter implements \Formatter {
 
