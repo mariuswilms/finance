@@ -129,8 +129,8 @@ class Price implements PriceInterface {
 	// @return Price
 	public function multiply($factor) {
 		return new Price(
-			$this->_castToInteger($result->_amount * $factor),
-			$result->_currency,
+			$this->_castToInteger($this->_amount * $factor),
+			$this->_currency,
 			$this->_type,
 			$this->_rate
 		);
