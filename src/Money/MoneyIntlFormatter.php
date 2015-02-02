@@ -16,7 +16,7 @@ use NumberFormatter;
 use AD\Finance\Money\MoneyInterface;
 use AD\Finance\Money\NullMoney;
 
-class MoneyIntlFormatter implements \Formatter {
+class MoneyIntlFormatter {
 
 	protected $_formatter;
 

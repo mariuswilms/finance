@@ -15,7 +15,7 @@ namespace AD\Finance\Price;
 use NumberFormatter;
 use AD\Finance\Price\PriceInterface;
 
-class PriceIntlFormatter implements \Formatter {
+class PriceIntlFormatter {
 
 	protected $_type = false;
 
