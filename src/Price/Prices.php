@@ -37,6 +37,9 @@ class Prices {
 
 	// @return Prices
 	public function add(PriceInterface $value) {
+		if ($value->isZero()) {
+			return clone $this;
+		}
 		$data = $this->_data;
 
 		$currency = (string) $value->getCurrency();
@@ -52,6 +55,9 @@ class Prices {
 
 	// @return Prices
 	public function subtract(PriceInterface $value) {
+		if ($value->isZero()) {
+			return clone $this;
+		}
 		$data = $this->_data;
 
 		$currency = (string) $value->getCurrency();

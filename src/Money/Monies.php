@@ -35,6 +35,9 @@ class Monies {
 
 	// @return Monies
 	public function add(MoneyInterface $value) {
+		if ($value->isZero()) {
+			return clone $this;
+		}
 		$data = $this->_data;
 		$currency = (string) $value->getCurrency();
 
@@ -48,6 +51,9 @@ class Monies {
 
 	// @return Monies
 	public function subtract(MoneyInterface $value) {
+		if ($value->isZero()) {
+			return clone $this;
+		}
 		$data = $this->_data;
 		$currency = (string) $value->getCurrency();
 
