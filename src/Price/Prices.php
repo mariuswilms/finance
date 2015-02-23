@@ -14,6 +14,7 @@ namespace AD\Finance\Price;
 
 use AD\Finance\Money;
 use AD\Finance\Money\NullMoney;
+use AD\Finance\Money\Monies;
 use AD\Finance\Price;
 use AD\Finance\Price\PriceInterface;
 use AD\Finance\Price\NullPrice;
@@ -31,6 +32,29 @@ class Prices {
 
 	public function sum() {
 		return $this->_data;
+	}
+
+	public function getNet() {
+		return $this->_monies(__FUNCTION__);
+	}
+
+	public function getGross() {
+		return $this->_monies(__FUNCTION__);
+	}
+
+	public function getTax() {
+		return $this->_monies(__FUNCTION__);
+	}
+
+	protected function _monies($method) {
+		$result = new Monies();
+
+		foreach ($this->_data as $rate => $currencies) {
+			foreach ($currencies as $currency => $price) {
+				$result = $result->add($price->$method());
+			}
+		}
+		return $result;
 	}
 
 	/* Calculation */
