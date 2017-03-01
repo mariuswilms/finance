@@ -75,6 +75,20 @@ class PricesTest extends \PHPUnit_Framework_TestCase {
 		$expected = 2380 + 2380;
 		$this->assertEquals($expected, $sum[19]['EUR']->getGross()->getAmount());
 	}
+
+	public function testAddingSummingCorrectRound() {
+		$subject = new Prices();
+		$subject = $subject->add((new Price(5000, 'EUR', 'net', 19))->multiply(0.25));
+		$subject = $subject->add((new Price(5000, 'EUR', 'net', 19))->multiply(0.25));
+		$subject = $subject->add((new Price(5000, 'EUR', 'net', 19))->multiply(0.25));
+		$subject = $subject->add((new Price(5000, 'EUR', 'net', 19))->multiply(0.25));
+		$subject = $subject->add((new Price(5000, 'EUR', 'net', 19))->multiply(0.5));
+
+		$sum = $subject->sum();
+
+		$this->assertEquals(7500, $sum[19]['EUR']->getNet()->getAmount());
+		$this->assertEquals(8925, $sum[19]['EUR']->getGross()->getAmount());
+	}
 }
 
 ?>
