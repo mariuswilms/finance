@@ -1,0 +1,22 @@
+#
+# Finance
+# 
+# Copyright (c) 2014 Atelier Disko - All rights reserved.
+#
+# This software is proprietary and confidential. Redistribution
+# not permitted. Unless required by applicable law or agreed to
+# in writing, software distributed on an "AS IS" BASIS, WITHOUT-
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#
+
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+
+[*.php]
+indent_style = tab
+tab_width = 4
+insert_final_newline = false
+trim_trailing_whitespace = true

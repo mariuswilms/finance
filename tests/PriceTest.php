@@ -24,8 +24,8 @@ class PriceTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSimpleNetToGross() {
-		$subject = new Price(2000, 'EUR', 'net', 19);
-		$expected = 2380;
+		$subject = new Price(2004, 'EUR', 'net', 19);
+		$expected = 2385;
 		$result = $subject->getGross()->getAmount();
 		$this->assertEquals($expected, $result);
 	}
@@ -77,12 +77,12 @@ class PriceTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testTax() {
-		$subject = new Price(2000, 'EUR', 'gross', 19);
+		$subject = new Price(2004, 'EUR', 'gross', 19);
 		$expected = 320;
 		$this->assertEquals($expected, $subject->getTax()->getAmount());
 
-		$subject = new Price(1680, 'EUR', 'net', 19);
-		$expected = 319;
+		$subject = new Price(2004, 'EUR', 'net', 19);
+		$expected = 381;
 		$this->assertEquals($expected, $subject->getTax()->getAmount());
 	}
 
@@ -94,7 +94,7 @@ class PriceTest extends \PHPUnit_Framework_TestCase {
 
 		$tax = $subject->getTax()->getAmount();
 
-		$expected = 320;
+		$expected = 319;
 		$result = $gross - $net;
 		$this->assertEquals($expected, $result);
 
