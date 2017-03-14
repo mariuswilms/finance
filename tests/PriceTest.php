@@ -32,7 +32,7 @@ class PriceTest extends \PHPUnit_Framework_TestCase {
 
 	public function testSimpleGrossToNet() {
 		$subject = new Price(2000, 'EUR', 'gross', 19);
-		$expected = 1680;
+		$expected = 1681;
 		$result = $subject->getNet()->getAmount();
 		$this->assertEquals($expected, $result);
 	}

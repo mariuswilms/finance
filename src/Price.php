@@ -216,7 +216,7 @@ class Price implements PriceInterface {
 	}
 
 	protected function _castToInteger($amount) {
-		$amount = round($amount, PHP_ROUND_HALF_UP);
+		$amount = round($amount, 0, PHP_ROUND_HALF_UP);
 
 		if (abs($amount) > PHP_INT_MAX) {
 			throw new OverflowException();
