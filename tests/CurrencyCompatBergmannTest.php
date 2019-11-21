@@ -2,12 +2,10 @@
 /**
  * Finance
  *
- * Copyright (c) 2014 Atelier Disko - All rights reserved.
+ * Copyright (c) 2014 Marius Wilms - All rights reserved.
  *
- * This software is proprietary and confidential. Redistribution
- * not permitted. Unless required by applicable law or agreed to
- * in writing, software distributed on an "AS IS" BASIS, WITHOUT-
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * Use of this source code is governed by a BSD-style
+ * license that can be found in the LICENSE file.
  */
 
 namespace AD\Finance;

@@ -3,18 +3,12 @@
     "description": "Utilities to deal with financial things.",
     "keywords": ["tax", "price", "finance", "currency"],
     "homepage": "https://github.com/atelierdisko/finance",
-    "license": "proprietary",
-    "authors": [
-        {
-            "name": "Atelier Disko",
-            "homepage": "http://atelierdisko.de"
-        }
-    ],
+    "license": "BSD-3-clause",
     "require": {
-        "php": ">=5.5.0"
+        "php": "^5.5.0 || ^7.0.0"
     },
     "require-dev": {
-        "phpunit/phpunit": ">=4.0.0"    
+        "phpunit/phpunit": "^4.0.0"
     },
     "autoload": {
         "psr-4": { "AD\\Finance\\": "src/" }
