@@ -8,10 +8,10 @@
  * license that can be found in the LICENSE file.
  */
 
-namespace AD\Finance;
+namespace Finance;
 
-use AD\Finance\Price;
-use AD\Finance\Price\NullPrice;
+use Finance\Price;
+use Finance\Price\NullPrice;
 
 class NullPriceTest extends \PHPUnit_Framework_TestCase {
 
@@ -43,21 +43,21 @@ class NullPriceTest extends \PHPUnit_Framework_TestCase {
 		$subject = new NullPrice();
 
 		$result = $subject->getNet();
-		$this->assertInstanceOf('AD\Finance\Money\NullMoney', $result);
+		$this->assertInstanceOf('Finance\Money\NullMoney', $result);
 	}
 
 	public function testGross() {
 		$subject = new NullPrice();
 
 		$result = $subject->getGross();
-		$this->assertInstanceOf('AD\Finance\Money\NullMoney', $result);
+		$this->assertInstanceOf('Finance\Money\NullMoney', $result);
 	}
 
 	public function testTax() {
 		$subject = new NullPrice();
 
 		$result = $subject->getTax();
-		$this->assertInstanceOf('AD\Finance\Money\NullMoney', $result);
+		$this->assertInstanceOf('Finance\Money\NullMoney', $result);
 	}
 
 	public function testRate() {

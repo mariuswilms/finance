@@ -8,7 +8,7 @@
  * license that can be found in the LICENSE file.
  */
 
-namespace AD\Finance\Money;
+namespace Finance\Money;
 
 interface MoneyInterface {
 

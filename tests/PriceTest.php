@@ -9,9 +9,9 @@
  * license that can be found in the LICENSE file.
  */
 
-namespace AD\Finance;
+namespace Finance;
 
-use AD\Finance\Price;
+use Finance\Price;
 
 class PriceTest extends \PHPUnit_Framework_TestCase {
 

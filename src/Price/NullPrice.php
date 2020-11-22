@@ -8,11 +8,11 @@
  * license that can be found in the LICENSE file.
  */
 
-namespace AD\Finance\Price;
+namespace Finance\Price;
 
-use AD\Finance\Currency;
-use AD\Finance\Money\NullMoney;
-use AD\Finance\Price\PriceInterface;
+use Finance\Currency;
+use Finance\Money\NullMoney;
+use Finance\Price\PriceInterface;
 
 class NullPrice implements PriceInterface {
 

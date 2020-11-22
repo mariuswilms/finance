@@ -9,14 +9,14 @@
  * license that can be found in the LICENSE file.
  */
 
-namespace AD\Finance;
+namespace Finance;
 
 use Exception;
 use InvalidArgumentException;
 use OverflowException;
-use AD\Finance\Money;
-use AD\Finance\Currency;
-use AD\Finance\Price\PriceInterface;
+use Finance\Money;
+use Finance\Currency;
+use Finance\Price\PriceInterface;
 
 /**
  * A class which is loosely based upon the Money class. In contrast to money

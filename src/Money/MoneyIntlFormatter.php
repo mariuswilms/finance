@@ -8,11 +8,11 @@
  * license that can be found in the LICENSE file.
  */
 
-namespace AD\Finance\Money;
+namespace Finance\Money;
 
 use NumberFormatter;
-use AD\Finance\Money\MoneyInterface;
-use AD\Finance\Money\NullMoney;
+use Finance\Money\MoneyInterface;
+use Finance\Money\NullMoney;
 
 class MoneyIntlFormatter {
 

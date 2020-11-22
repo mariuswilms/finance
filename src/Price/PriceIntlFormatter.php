@@ -8,10 +8,10 @@
  * license that can be found in the LICENSE file.
  */
 
-namespace AD\Finance\Price;
+namespace Finance\Price;
 
 use NumberFormatter;
-use AD\Finance\Price\PriceInterface;
+use Finance\Price\PriceInterface;
 
 class PriceIntlFormatter {
 

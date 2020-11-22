@@ -8,7 +8,7 @@
  * license that can be found in the LICENSE file.
  */
 
-namespace AD\Finance;
+namespace Finance;
 
 /**
  * This test is inherited from Sebastian Bergmann's "Money" project and is:
@@ -23,7 +23,7 @@ namespace AD\Finance;
 class CurrencyCopyBergmannTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * @covers			  \AD\Finance\Currency::__construct
+	 * @covers			  \Finance\Currency::__construct
 	 * @expectedException \InvalidArgumentException
 	 */
 	public function testExceptionIsRaisedForInvalidConstructorArgument() {
@@ -31,7 +31,7 @@ class CurrencyCopyBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers \AD\Finance\Currency::__construct
+	 * @covers \Finance\Currency::__construct
 	 */
 	public function testCanBeConstructedFromUppercaseString() {
 		$c = new Currency('EUR');
@@ -42,7 +42,7 @@ class CurrencyCopyBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers \AD\Finance\Currency::__construct
+	 * @covers \Finance\Currency::__construct
 	 */
 	public function testCanBeConstructedFromLowercaseString() {
 		$c = new Currency('eur');
@@ -52,8 +52,8 @@ class CurrencyCopyBergmannTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @backupStaticAttributes enabled
-	 * @covers \AD\Finance\Currency::addCurrency
-	 * @uses   \AD\Finance\Currency::__construct
+	 * @covers \Finance\Currency::addCurrency
+	 * @uses   \Finance\Currency::__construct
 	 */
 	public function testCustomCurrencyCanBeRegistered() {
 		Currency::addCurrency(
@@ -65,13 +65,13 @@ class CurrencyCopyBergmannTest extends \PHPUnit_Framework_TestCase {
 		);
 
 		$this->assertInstanceOf(
-			'AD\Finance\Currency',
+			'Finance\Currency',
 			new Currency('BTC')
 		);
 	}
 
 	/**
-	 * @covers	\AD\Finance\Currency::__toString
+	 * @covers	\Finance\Currency::__toString
 	 * @depends testCanBeConstructedFromUppercaseString
 	 */
 	public function testCanBeCastToString(Currency $c) {
@@ -79,7 +79,7 @@ class CurrencyCopyBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers	\AD\Finance\Currency::getCurrencyCode
+	 * @covers	\Finance\Currency::getCurrencyCode
 	 * @depends testCanBeConstructedFromUppercaseString
 	 */
 	public function testCurrencyCodeCanBeRetrieved(Currency $c) {
@@ -87,7 +87,7 @@ class CurrencyCopyBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers	\AD\Finance\Currency::getDefaultFractionDigits
+	 * @covers	\Finance\Currency::getDefaultFractionDigits
 	 * @depends testCanBeConstructedFromUppercaseString
 	 */
 	public function testDefaultFractionDigitsCanBeRetrieved(Currency $c) {
@@ -95,7 +95,7 @@ class CurrencyCopyBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers	\AD\Finance\Currency::getDisplayName
+	 * @covers	\Finance\Currency::getDisplayName
 	 * @depends testCanBeConstructedFromUppercaseString
 	 */
 	public function testDisplayNameCanBeRetrieved(Currency $c) {
@@ -103,7 +103,7 @@ class CurrencyCopyBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers	\AD\Finance\Currency::getNumericCode
+	 * @covers	\Finance\Currency::getNumericCode
 	 * @depends testCanBeConstructedFromUppercaseString
 	 */
 	public function testNumericCodeCanBeRetrieved(Currency $c) {
@@ -111,7 +111,7 @@ class CurrencyCopyBergmannTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers	\AD\Finance\Currency::getSubUnit
+	 * @covers	\Finance\Currency::getSubUnit
 	 * @depends testCanBeConstructedFromUppercaseString
 	 */
 	public function testSubUnitCanBeRetrieved(Currency $c) {

@@ -9,12 +9,12 @@
  * license that can be found in the LICENSE file.
  */
 
-namespace AD\Finance;
+namespace Finance;
 
 use Exception;
 use InvalidArgumentException;
-use AD\Finance\Currency;
-use AD\Finance\Money\MoneyInterface;
+use Finance\Currency;
+use Finance\Money\MoneyInterface;
 
 class Money implements MoneyInterface {
 

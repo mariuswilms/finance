@@ -8,14 +8,14 @@
  * license that can be found in the LICENSE file.
  */
 
-namespace AD\Finance\Price;
+namespace Finance\Price;
 
-use AD\Finance\Money;
-use AD\Finance\Money\NullMoney;
-use AD\Finance\Money\Monies;
-use AD\Finance\Price;
-use AD\Finance\Price\PriceInterface;
-use AD\Finance\Price\NullPrice;
+use Finance\Money;
+use Finance\Money\NullMoney;
+use Finance\Money\Monies;
+use Finance\Price;
+use Finance\Price\PriceInterface;
+use Finance\Price\NullPrice;
 
 // Allows mixing prices with different currencies and rates.
 class Prices {
