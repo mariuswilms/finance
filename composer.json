@@ -1,8 +1,8 @@
 {
-    "name": "atelierdisko/finance",
+    "name": "mariuswilms/finance",
     "description": "Utilities to deal with financial things.",
     "keywords": ["tax", "price", "finance", "currency"],
-    "homepage": "https://github.com/atelierdisko/finance",
+    "homepage": "https://github.com/mariuswilms/finance",
     "license": "BSD-3-clause",
     "require": {
         "php": "^5.5.0 || ^7.0.0"
